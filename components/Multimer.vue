@@ -1,17 +1,13 @@
 <template>
   <container>
-    <grid
-      :columns="3"
-      :areas="[]"
-      :gap="0"
-    >
-    </grid>
+    <multimer-list>
+      <multimer-item :timer="timer"/>
+    </multimer-list>
 
     <floating-bar justifyContentFlexEnd>
       <btn
-        color="blueberry-2"
-        borderColor="cloud-2"
-        backgroundColor="cloud-1"
+        borderColor="licorice-3"
+        backgroundColor="licorice-2"
         icon
         large
       >
@@ -24,53 +20,86 @@
 <script>
 
 
+import MultimerList from '~/components/MultimerList'
+import MultimerItem from '~/components/MultimerItem'
 import Btn from '~/components/Btn'
-import Grid from '~/components/Grid'
 import Container from '~/components/Container'
 import Icon from '~/components/Icon'
 import FloatingBar from '~/components/FloatingBar'
 
 import {
-  newTimer
 } from '~/helpers/types'
 
 export default {
   components: {
-    Grid,
     Btn,
     Icon,
     FloatingBar,
     Container,
+    MultimerItem,
+    MultimerList,
   },
 
   data() {
     return {
-      newTimer,
-    }
-  },
-
-  methods: {
-    submitNewTimer () {
-      const cloneNewTimer = JSON.parse(JSON.stringify(this.newTimer))
-
-      const timer = Object.assign({}, cloneNewTimer, {
-        defaultTime: cloneNewTimer.time,
+      // newTimer,
+      timer: {
+        id: Date.now(),
+        title: 'Pizza',
+        time: {
+          hours: 0,
+          minutes: 0,
+          seconds: 10
+        },
+        defaultTime: {
+          hours: 0,
+          minutes: 0,
+          seconds: 10
+        },
         active: false,
         interval: null,
-        id: Date.now()
-      })
-
-      // this.$store.commit('multimer/addTimer', timer)
-
-      this.newTimer = Object.assign({}, newTimer)
+        theme: 'kiwi',
+      },
     }
   },
 
-  computed: {
-    uniqueAreas (a){
-      return [...new Set(this.areas)]
-    }
-  }
+
+
+  methods: {
+    removeTimer (timer) {
+
+    },
+
+    editTimer (timer) {
+
+    },
+
+    restartTimer (timer) {
+
+    },
+
+    stopTimer (timer) {
+
+    },
+
+    startTimer (timer) {
+
+    },
+    // submitNewTimer () {
+    //   const cloneNewTimer = JSON.parse(JSON.stringify(this.newTimer))
+
+    //   const timer = Object.assign({}, cloneNewTimer, {
+    //     defaultTime: cloneNewTimer.time,
+    //     active: false,
+    //     interval: null,
+    //     id: Date.now()
+    //   })
+
+    //   // this.$store.commit('multimer/addTimer', timer)
+
+    //   this.newTimer = Object.assign({}, newTimer)
+    // }
+  },
 }
 </script>
 

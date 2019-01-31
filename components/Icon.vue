@@ -1,5 +1,5 @@
 <template>
-  <i class="icon material-icons" :class="[fontSize]" :style="{ fontSize: this.size? `${this.size}px` : '' }">
+  <i class="icon material-icons" :class="[fontSize, { 'c-pointer': cursorPointer }]" :style="{ fontSize: this.size? `${this.size}px` : '' }">
     <slot></slot>
   </i>
 </template>
@@ -21,6 +21,11 @@ export default {
       type: Number,
       default: 0,
     },
+
+    cursorPointer: {
+      type: Boolean,
+      default: true,
+    }
   },
 
   computed: {

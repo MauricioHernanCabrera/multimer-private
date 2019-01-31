@@ -1,6 +1,5 @@
 <template>
-  <nuxt-link
-    :to="to"
+  <button
     class="btn"
     :class="[
       size,
@@ -12,7 +11,7 @@
     :type="type"
   >
     <slot></slot>
-  </nuxt-link>
+  </button>
 </template>
 
 <script>
@@ -77,19 +76,14 @@ export default {
       type: Boolean,
       default: false,
     },
-
-    to: {
-      type: String,
-      default: ''
-    }
   },
 
   computed: {
     size () {
       if (this.icon) {
-        return this.block? 'btn--icon-block' : this.small? 'n--icon-small' : this.large? 'n--icon-large' : ''
+        return this.block? 'btn--icon-block' : this.small? 'btn--icon-small' : this.large? 'btn--icon-large' : ''
       } else {
-        return this.block? 'btn--block' : this.small? 'n--small' : this.large? 'n--large' : ''
+        return this.block? 'btn--block' : this.small? 'btn--small' : this.large? 'btn--large' : ''
       }
     },
 

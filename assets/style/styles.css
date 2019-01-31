@@ -349,3 +349,7 @@ body {
 .justify-content-inherit {
   justify-content: inherit;
 }
+
+.c-pointer {
+  cursor: pointer;
+}
