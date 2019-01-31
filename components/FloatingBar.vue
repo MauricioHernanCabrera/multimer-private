@@ -5,14 +5,14 @@
     left? 'floating-bar--left' : '',
     right? 'floating-bar--right' : '',
   ]">
-    <bt-container class="container" :class="[justifyContent]">
+    <container class="container" :class="[justifyContent]">
       <slot></slot>
-    </bt-container>
+    </container>
   </div>
 </template>
 
 <script>
-import BtContainer from '~/components/Container'
+import Container from '~/components/Container'
 
 export default {
   props: {
@@ -68,7 +68,7 @@ export default {
   },
 
   components: {
-    BtContainer
+   Container
   },
 
   computed: {

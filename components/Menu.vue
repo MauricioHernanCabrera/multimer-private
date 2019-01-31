@@ -1,7 +1,11 @@
 <template>
-  <bt-container class="container" :paddingY="false">
+  <container class="container" :paddingY="false">
     <div class="menu">
-      <nuxt-link to="/" class="title">Multimer</nuxt-link>
+      <div>
+        <nuxt-link v-if="withArrowBack" to="/" class="arrow-back"><icon>arrow_back</icon></nuxt-link>
+
+        <nuxt-link to="/" class="title">{{ title }}</nuxt-link>
+      </div>
       <!-- <nav class="navigation">
         <ul class="list">
           <li class="list-item">
@@ -10,15 +14,29 @@
         </ul>
       </nav> -->
     </div>
-  </bt-container>
+  </container>
 </template>
 
 <script>
-import BtContainer from '~/components/Container'
+import Container from '~/components/Container'
+import Icon from '~/components/Icon'
 
 export default {
+  props: {
+    title: {
+      type: String,
+      default: 'Multimer',
+    },
+
+    withArrowBack: {
+      type: Boolean,
+      default: false,
+    },
+  },
+
   components: {
-    BtContainer
+    Container,
+    Icon,
   }
 }
 </script>
@@ -41,6 +59,17 @@ export default {
 .menu .title {
   font-size: var(--fs-headline);
   font-weight: 700;
+}
+
+.menu > div {
+  display: flex;
+  align-items: center;
+}
+.menu > div > .arrow-back {
+  display: flex;
+  align-items: center;
+  margin: 0 5px 0 0;
+  cursor: pointer;
 }
 
 /* .menu .navigation {

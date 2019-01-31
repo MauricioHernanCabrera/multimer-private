@@ -1,12 +1,22 @@
-import Vuex from 'vuex'
-import multimer from '~/store/multimer'
+import {
+  findIndexById
+} from '~/helpers/time'
 
-const createStore = () => {
-  return new Vuex.Store({
-    modules: {
-      multimer
-    }
-  })
+export const state = () => ({
+  timers: [],
+})
+
+export const mutations = {
+  addTimer (state, timer) {
+    state.timers.push(timer)
+  },
+
+  removeTimer (state, id) {
+    const indexTimer = findIndexById(timers, id)
+    state.timers.splice(indexTimer, 1)
+  },
 }
 
-export default createStore
+export const getters = {}
+
+export const actions = {}

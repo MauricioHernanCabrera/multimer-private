@@ -37,8 +37,6 @@ const THEME = [
   'raspberry',
   'jelly',
   'cocoa',
-  'licorice',
-  'cloud',
 ]
 
 const TYPES_OF_BUTTONS = [

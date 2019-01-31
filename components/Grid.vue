@@ -19,7 +19,7 @@ export default {
 
     areas: {
       type: Array,
-      default: ['base'],
+      default: [],
     },
 
     gap: {
@@ -69,6 +69,7 @@ export default {
       }
     }
   },
+
   computed: {
     styleObject () {
       return {
@@ -86,7 +87,7 @@ export default {
 
 .grid {
   display: grid;
-  justify-content: center;
+  /* justify-content: center; */
 }
 
 </style>
