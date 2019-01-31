@@ -1,0 +1,28 @@
+{
+  "name": "bard-time",
+  "version": "1.0.0",
+  "description": "Web-App para medir el tiempo",
+  "author": "Mauricio Hernan Cabrera",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/pwa": "^2.6.0",
+    "animate.css": "^3.7.0",
+    "cookie-universal-nuxt": "^2.0.14",
+    "epic-spinners": "^1.0.4",
+    "normalize.css": "^8.0.1",
+    "nuxt": "^2.3.4",
+    "scrollreveal": "^4.0.5",
+    "vuetify": "^1.4.4",
+    "webfontloader": "^1.6.28"
+  },
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "nodemon": "^1.18.9"
+  }
+}
