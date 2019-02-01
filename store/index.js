@@ -12,12 +12,12 @@ export const state = () => ({
       time: {
         hours: 0,
         minutes: 0,
-        seconds: 10,
+        seconds: 3,
       },
       defaultTime: {
         hours: 0,
         minutes: 0,
-        seconds: 10,
+        seconds: 3,
       },
       active: false,
       interval: null,
@@ -25,7 +25,8 @@ export const state = () => ({
     }
   ],
   page: 'multimer',
-  editTimer: {}
+  editTimer: {},
+  historyList: [],
 })
 
 export const getters = {
@@ -44,6 +45,10 @@ export const mutations = {
       ...state.editTimer,
       ...JSON.parse(JSON.stringify(data))
     }
+  },
+
+  addHistory (state, history) {
+    state.historyList.unshift(history)
   },
 
   updateTimer (state, { timerId, data }) {
@@ -67,6 +72,15 @@ export const mutations = {
 }
 
 export const actions = {
+  activeSound ({}, title) {
+    console.log(navigator.language)
+    const voice = window.speechSynthesis.getVoices().find((voice) => voice.lang === 'en-US')
+    const message = new SpeechSynthesisUtterance(`¡Finished ${title}!`)
+    message.voice = voice
+    window.speechSynthesis.speak(message)
+    window.navigator.vibrate([500, 250, 500, 250, 500])
+  },
+
   removeTimer ({ dispatch }, timerId) {
     dispatch('stopTimer', timerId)
     commit('removeTimer', timerId)
@@ -170,6 +184,13 @@ export const actions = {
     const newTimer = getters.timer(timerId)
 
     if (finishedTheTimer(newTimer.time)) {
+      dispatch('activeSound', newTimer.title)
+      commit('addHistory', {
+        id: Date.now() - newTimer.id,
+        message: `Finished ${newTimer.title}!`,
+        theme: newTimer.theme,
+        created: new Date(),
+      })
       dispatch('restartTimer', newTimer.id)
     }
   }

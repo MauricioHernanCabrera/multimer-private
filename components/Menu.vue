@@ -4,8 +4,20 @@
       <div>
         <a v-if="withArrowBack" to="/" class="arrow-back" @click="$emit('clickArrowBack')"><icon>arrow_back</icon></a>
 
-        <a to="/" class="title" @click="$emit('clickTitle')">{{ title }}</a>
+        <a class="title" @click="$emit('clickTitle')">{{ title }}</a>
       </div>
+
+      <a class="history" @click="$emit('clickTitle')" v-if="withHistory">
+        <btn
+          onlyBorderBottom
+          borderColor="licorice-3"
+          backgroundColor="licorice-2"
+          @click="$emit('clickHistory')"
+        >
+          <icon style="margin-right: 2px;">history</icon>
+          History
+        </btn>
+      </a>
       <!-- <nav class="navigation">
         <ul class="list">
           <li class="list-item">
@@ -20,6 +32,7 @@
 <script>
 import Container from '~/components/Container'
 import Icon from '~/components/Icon'
+import Btn from '~/components/Btn'
 
 export default {
   props: {
@@ -32,11 +45,17 @@ export default {
       type: Boolean,
       default: false,
     },
+
+    withHistory: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   components: {
     Container,
     Icon,
+    Btn,
   }
 }
 </script>
@@ -45,6 +64,7 @@ export default {
 
 .container {
   box-shadow: 0px 2px var(--color-cloud-2);
+  position: sticky;
 }
 
 .menu {
@@ -54,7 +74,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: sticky;
 }
 
 .menu .title {

@@ -15,6 +15,7 @@
     "animate.css": "^3.7.0",
     "cookie-universal-nuxt": "^2.0.14",
     "epic-spinners": "^1.0.4",
+    "moment": "^2.24.0",
     "normalize.css": "^8.0.1",
     "nuxt": "^2.3.4",
     "scrollreveal": "^4.0.5",

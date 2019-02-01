@@ -49,7 +49,7 @@
             </select-time>
           </input-time>
 
-          <input-color v-model="theme" style="margin-bottom: 100px;"/>
+          <input-color v-model="theme" style="margin-bottom: 75px;"/>
 
         </container>
 

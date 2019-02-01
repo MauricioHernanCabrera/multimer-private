@@ -1,14 +1,35 @@
 <template>
   <div>
+
     <multimer/>
 
-    <modal v-if="$store.state.page === 'new-multimer'">
-      <new-multimer/>
-    </modal>
 
-    <modal v-else-if="$store.state.page === 'edit-multimer'">
-      <edit-multimer/>
-    </modal>
+    <transition
+      enter-active-class="animated fadeInRightBig"
+      leave-active-class="animated fadeOutRightBig"
+    >
+      <modal v-if="$store.state.page === 'new-multimer'">
+        <new-multimer/>
+      </modal>
+    </transition>
+
+    <transition
+      enter-active-class="animated fadeInRightBig"
+      leave-active-class="animated fadeOutRightBig"
+    >
+      <modal v-if="$store.state.page === 'edit-multimer'">
+        <edit-multimer/>
+      </modal>
+    </transition>
+
+    <transition
+      enter-active-class="animated fadeInRightBig"
+      leave-active-class="animated fadeOutRightBig"
+    >
+      <modal v-if="$store.state.page === 'history'">
+        <history/>
+      </modal>
+    </transition>
   </div>
 </template>
 
@@ -18,6 +39,7 @@ import Modal from '~/components/Modal'
 import Multimer from '~/components/Multimer'
 import NewMultimer from '~/components/NewMultimer'
 import EditMultimer from '~/components/EditMultimer'
+import History from '~/components/History'
 
 export default {
   components: {
@@ -25,6 +47,7 @@ export default {
     Multimer,
     Modal,
     EditMultimer,
+    History,
   },
 }
 </script>

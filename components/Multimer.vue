@@ -7,7 +7,7 @@
     class="layout"
   >
     <grid-item area="header" key="header">
-      <Menu/>
+      <Menu withHistory @clickHistory="$store.commit('setPage', 'history')"/>
     </grid-item>
 
     <grid-item area="pages" key="pages">

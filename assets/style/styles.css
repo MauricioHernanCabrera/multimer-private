@@ -67,6 +67,7 @@ body {
   font-family: var(--font-family);
   background: var(--color-cloud-1);
   color: var(--color-licorice-3);
+  overflow-x: hidden;
   /* user-select: none; */
 }
 .bg-transparent {
