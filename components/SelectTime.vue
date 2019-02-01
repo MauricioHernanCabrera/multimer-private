@@ -3,12 +3,12 @@
     <ul class="list-of-time">
       <li
         class="item"
-        :class="[{ 'selected': item.selected }, item.selected? `bg-${theme}-2` : '']"
+        :class="[{ 'selected': item === value }, item === value? `bg-${theme}-2` : '']"
         v-for="item in listOfTime"
-        :key="item.value"
-        :Value="item.value"
-        @click="changeValue($event.target.value)">
-        {{ item.value }}
+        :key="item"
+        :Value="item"
+        @click="$emit('input', $event.target.value)">
+        {{ item }}
       </li>
     </ul>
     <p class="title">{{ title }}</p>
@@ -50,31 +50,28 @@ export default {
     }
   },
 
-  mounted () {
-    for (let i = this.init; i <= this.finish; i++) {
-      this.listOfTime.push({
-        value: i,
-        selected: false,
-      })
-    }
-    this.listOfTime[0].selected = true
+  watch: {
+    init (value) {
+      this.listOfTime = []
+      for (let i = value; i <= this.finish; i++) {
+        this.listOfTime.push(i)
+      }
+    },
 
-    const timeIndex = this.listOfTime.findIndex((item) => item.value === Number(this.value))
-    if (timeIndex >= 0) {
-      this.changeValue(this.value)
+
+    finish (value) {
+      this.listOfTime = []
+      for (let i = this.init; i <= value; i++) {
+        this.listOfTime.push(i)
+      }
     }
   },
 
-  methods: {
-    changeValue (value) {
-      this.$emit('input', Number(value))
-
-      const timeIndex = this.listOfTime.findIndex((item) => item.value === Number(value))
-      const selectedIndex = this.listOfTime.findIndex((item) => item.selected)
-      this.listOfTime[selectedIndex].selected = false
-      this.listOfTime[timeIndex].selected = true
+  mounted () {
+    for (let i = this.init; i <= this.finish; i++) {
+      this.listOfTime.push(i)
     }
-  }
+  },
 }
 </script>
 

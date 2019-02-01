@@ -45,12 +45,12 @@ export default {
 
     backgroundColor: {
       type: String,
-      default: ''
+      default: 'transparent'
     },
 
     borderColor: {
       type: String,
-      default: ''
+      default: 'transparent'
     },
 
     justifyContentFlexStart: {

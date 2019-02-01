@@ -1,12 +1,10 @@
 <template>
   <div>
-
     <multimer/>
 
-    <modal>
+    <modal v-if="$store.state.page === 'new-multimer'">
       <new-multimer/>
     </modal>
-
   </div>
 </template>
 

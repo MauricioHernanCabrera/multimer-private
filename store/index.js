@@ -5,25 +5,8 @@ import {
 } from '~/helpers/time'
 
 export const state = () => ({
-  timers: [
-    {
-      id: Date.now(),
-      title: 'Pizza',
-      time: {
-        hours: 0,
-        minutes: 0,
-        seconds: 5
-      },
-      defaultTime: {
-        hours: 0,
-        minutes: 0,
-        seconds: 5
-      },
-      active: false,
-      interval: null,
-      theme: 'kiwi',
-    },
-  ],
+  timers: [],
+  page: 'multimer',
 })
 
 export const getters = {
@@ -33,6 +16,10 @@ export const getters = {
 }
 
 export const mutations = {
+  setPage (state, page) {
+    state.page = page
+  },
+
   updateTimer (state, { timerId, data }) {
     const timer = findById(state.timers, timerId)
 
@@ -42,9 +29,9 @@ export const mutations = {
     ]
   },
 
-  // addTimer (state, timer) {
-  //   state.timers.push(timer)
-  // },
+  addTimer (state, timer) {
+    state.timers.push(timer)
+  },
 
   removeTimer (state, timerId) {
     const indexTimer = findById(state.timers, timerId)

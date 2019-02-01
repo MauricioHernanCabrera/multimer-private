@@ -22,6 +22,7 @@
             backgroundColor="licorice-2"
             icon
             large
+            @click="$store.commit('setPage', 'new-multimer')"
           >
             <icon>add</icon>
           </btn>

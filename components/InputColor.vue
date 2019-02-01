@@ -9,10 +9,10 @@
     >
       <div
         class="item"
-        :class="[`bg-${item.value}-2`, { 'selected': item.selected }]"
+        :class="[`bg-${item}-2`, { 'selected': item === value }]"
         v-for="item in listOfColor"
-        :key="item.value"
-        @click="changeValue(item.value)">
+        :key="item"
+        @click="$emit('input', item)">
       </div>
     </grid>
   </div>
@@ -37,31 +37,9 @@ export default {
 
   data () {
     return {
-      listOfColor: []
+      listOfColor: THEME
     }
   },
-
-  mounted () {
-    this.listOfColor = THEME.map((t) => ({ value: t, selected: false }))
-    this.listOfColor[0].selected = true
-
-    console.log(this.value)
-    const colorIndex = this.listOfColor.findIndex((item) => item.value === this.value)
-    if (colorIndex >= 0) {
-      this.changeValue(this.value)
-    }
-  },
-
-  methods: {
-    changeValue (value) {
-      this.$emit('input', value)
-      const colorIndex = this.listOfColor.findIndex((item) => item.value === value)
-      const selectedIndex = this.listOfColor.findIndex((item) => item.selected)
-
-      this.listOfColor[selectedIndex].selected = false
-      this.listOfColor[colorIndex].selected = true
-    }
-  }
 }
 </script>
 

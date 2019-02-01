@@ -2,9 +2,9 @@
   <container class="container" :paddingY="false">
     <div class="menu">
       <div>
-        <nuxt-link v-if="withArrowBack" to="/" class="arrow-back"><icon>arrow_back</icon></nuxt-link>
+        <a v-if="withArrowBack" to="/" class="arrow-back" @click="$emit('clickArrowBack')"><icon>arrow_back</icon></a>
 
-        <nuxt-link to="/" class="title">{{ title }}</nuxt-link>
+        <a to="/" class="title" @click="$emit('clickTitle')">{{ title }}</a>
       </div>
       <!-- <nav class="navigation">
         <ul class="list">
@@ -60,6 +60,7 @@ export default {
 .menu .title {
   font-size: var(--fs-headline);
   font-weight: 700;
+  cursor: pointer;
 }
 
 .menu > div {

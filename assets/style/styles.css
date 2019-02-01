@@ -69,7 +69,9 @@ body {
   color: var(--color-licorice-3);
   /* user-select: none; */
 }
-
+.bg-transparent {
+  background-color: transparent;
+}
 .bg-kiwi-3 {
   background-color: var(--color-kiwi-3);
 }
@@ -241,6 +243,9 @@ body {
 }
 
 
+.bc-transparent {
+  border-color: transparent;
+}
 .bc-kiwi-3 {
   border-color: var(--color-kiwi-3);
 }
