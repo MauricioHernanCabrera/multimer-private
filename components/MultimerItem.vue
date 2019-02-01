@@ -11,11 +11,11 @@
 
       <div class="actions">
 
-        <icon @click="$store.dispatch('removeTimer', timer.id)" :disabled="timer.active">
+        <icon @click="$store.commit('removeTimer', timer.id)" :disabled="timer.active">
           delete
         </icon>
 
-        <icon @click="$store.dispatch('editTimer', timer.id)" :disabled="timer.active">
+        <icon @click="editTimer(timer)" :disabled="timer.active">
           edit
         </icon>
 
@@ -106,6 +106,11 @@ export default {
 
   methods: {
     percentageOfTime,
+
+    editTimer (timer) {
+      this.$store.commit('updateEditTimer', JSON.parse(JSON.stringify(timer)))
+      this.$store.commit('setPage', 'edit-multimer')
+    }
   },
 
   filters: {

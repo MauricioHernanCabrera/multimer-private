@@ -13,7 +13,7 @@
     <grid-item area="pages" key="pages">
       <container>
         <multimer-list>
-          <multimer-item v-for="timer in $store.state.timers" :key="timer.id" :timer="timer"/>
+          <multimer-item v-for="timer in timersForId" :key="timer.id" :timer="timer"/>
         </multimer-list>
 
         <floating-bar justifyContentFlexEnd>
@@ -61,27 +61,12 @@ export default {
     GridItem
   },
 
-  data () {
-    return {
+  computed: {
+    timersForId () {
+      const timers = JSON.parse(JSON.stringify(this.$store.state.timers))
+
+      return timers.sort((timerA, timerB) => timerA.id - timerB.id)
     }
-  },
-
-  methods: {
-
-    // submitNewTimer () {
-    //   const cloneNewTimer = JSON.parse(JSON.stringify(this.newTimer))
-
-    //   const timer = Object.assign({}, cloneNewTimer, {
-    //     defaultTime: cloneNewTimer.time,
-    //     active: false,
-    //     interval: null,
-    //     id: Date.now()
-    //   })
-
-    //   // this.$store.commit('multimer/addTimer', timer)
-
-    //   this.newTimer = Object.assign({}, newTimer)
-    // }
   },
 }
 </script>

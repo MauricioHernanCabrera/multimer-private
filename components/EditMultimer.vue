@@ -27,7 +27,7 @@
               :init="0"
               :finish="23"
               title="Hora(s)"
-              v-model="time.hours">
+              v-model="hours">
             </select-time>
 
             <select-time
@@ -36,7 +36,7 @@
               :init="0"
               :finish="59"
               title="Minuto(s)"
-              v-model="time.minutes">
+              v-model="minutes">
             </select-time>
 
             <select-time
@@ -45,7 +45,7 @@
               :init="0"
               :finish="59"
               title="Segundo(s)"
-              v-model="time.seconds">
+              v-model="seconds">
             </select-time>
           </input-time>
 
@@ -71,7 +71,7 @@
           type="submit"
           :disabled="!isValid()"
         >
-          ADD
+          UPDATE
         </btn>
       </floating-bar>
     </grid>
@@ -115,48 +115,112 @@ export default {
     InputTime,
   },
 
-  data () {
-    return {
-      time: {
-        hours: 0,
-        minutes: 0,
-        seconds: 0,
+  computed: {
+    title: {
+      get () {
+        return this.$store.state.editTimer.title
       },
-      theme: 'kiwi',
-      title: '',
-    }
+
+      set (title) {
+        const payload = {
+          title
+        }
+        this.$store.commit('updateEditTimer', payload)
+      }
+    },
+
+    theme: {
+      get () {
+        return this.$store.state.editTimer.theme
+      },
+
+      set (theme) {
+        const payload = {
+          theme
+        }
+        this.$store.commit('updateEditTimer', payload)
+      }
+    },
+
+    hours: {
+      get () {
+        return this.$store.state.editTimer.time.hours
+      },
+
+      set (hours) {
+        const payload = {
+          time: {
+            ...this.$store.state.editTimer.time,
+            hours
+          }
+        }
+        this.$store.commit('updateEditTimer', payload)
+      }
+    },
+    minutes: {
+      get () {
+        return this.$store.state.editTimer.time.minutes
+      },
+
+      set (minutes) {
+        const payload = {
+          time: {
+            ...this.$store.state.editTimer.time,
+            minutes
+          }
+        }
+        this.$store.commit('updateEditTimer', payload)
+      }
+    },
+    seconds: {
+      get () {
+        return this.$store.state.editTimer.time.seconds
+      },
+
+      set (seconds) {
+        const payload = {
+          time: {
+            ...this.$store.state.editTimer.time,
+            seconds
+          }
+        }
+        this.$store.commit('updateEditTimer', payload)
+      }
+    },
   },
 
   methods: {
     submitTimer () {
       if (this.isValid()) {
-        const payload = {
-          time: Object.assign({}, this.time),
-          theme: this.theme,
-          title: this.title,
-          id: Date.now(),
-          defaultTime: Object.assign({}, this.time),
-          active: false,
-          interval: null,
-        }
-        this.$store.commit('addTimer', payload)
+        const { editTimer } = this.$store.state
+        this.$store.commit('updateTimer', {
+          timerId: editTimer.id,
+          data: {
+            ...editTimer,
+            defaultTime: Object.assign({}, editTimer.time),
+            interval: null,
+          }
+        })
         this.$store.commit('setPage', 'multimer')
       }
     },
 
     isValid () {
-      return isRequired(this.title) &&
-        timeToSeconds(this.time) > 0
+      return isRequired(this.$store.state.editTimer.title) &&
+        timeToSeconds(this.$store.state.editTimer.time) > 0
     },
 
     resetTimer () {
-      this.time = {
-        hours: 0,
-        minutes: 0,
-        seconds: 0,
+      const payload = {
+        time: {
+          hours: 0,
+          minutes: 0,
+          seconds: 0,
+        },
+        theme: 'kiwi',
+        title: ''
       }
-      this.theme = 'kiwi'
-      this.title = ''
+      this.$store.commit('updateEditTimer', payload)
     },
   }
 }

@@ -3,7 +3,8 @@
     class="icon material-icons"
     :class="[fontSize, { 'c-pointer': cursorPointer }, { 'icon--disabled': disabled }]"
     :style="{ fontSize: this.size? `${this.size}px` : '' }"
-    :disabled="disabled">
+    :disabled="disabled"
+    @click="$emit('click', $event)">
     <slot></slot>
   </i>
 </template>
@@ -50,6 +51,7 @@ export default {
 .icon {}
 
 .icon--disabled {
+  pointer-events: none;
   cursor: not-allowed;
   color: var(--color-cloud-1);
 }
