@@ -12,62 +12,74 @@
 
     <grid-item area="content" key="content">
       <container>
-        <input class="input-title" type="text" placeholder="Title">
+        <input-title v-model="title"/>
 
-        <div class="time">
-          <p class="title">Time</p>
-          <grid
-            :columns="3"
-            :rows="1"
-            :areas="['hours', 'minutes', 'seconds']"
-          >
-            <grid-item area="hours" key="hours">
-              <input-time
-                :theme="theme"
-                :init="0"
-                :finish="23"
-                title="Hora(s)"
-                v-model="time.hours">
-              </input-time>
-            </grid-item>
+        <input-time>
+          <select-time
+            slot="hours"
+            :theme="theme"
+            :init="0"
+            :finish="23"
+            title="Hora(s)"
+            v-model="time.hours">
+          </select-time>
 
-            <grid-item area="minutes" key="minutes">
-              <input-time
-                :theme="theme"
-                :init="0"
-                :finish="59"
-                title="Minuto(s)"
-                v-model="time.minutes">
-              </input-time>
-            </grid-item>
+          <select-time
+            slot="minutes"
+            :theme="theme"
+            :init="0"
+            :finish="59"
+            title="Minuto(s)"
+            v-model="time.minutes">
+          </select-time>
 
-            <grid-item area="seconds" key="seconds">
-              <input-time
-                :theme="theme"
-                :init="0"
-                :finish="59"
-                title="Segundo(s)"
-                v-model="time.seconds">
-              </input-time>
-            </grid-item>
-          </grid>
-        </div>
+          <select-time
+            slot="seconds"
+            :theme="theme"
+            :init="0"
+            :finish="59"
+            title="Segundo(s)"
+            v-model="time.seconds">
+          </select-time>
+        </input-time>
 
-        <input-color v-model="theme"/>
+        <input-color v-model="theme" style="margin-bottom: 100px;"/>
 
       </container>
 
     </grid-item>
+
+    <floating-bar justifyContentFlexEnd backgroundColor="cloud-1" borderColor="cloud-2">
+      <btn
+        borderColor="raspberry-3"
+        backgroundColor="raspberry-2"
+        class="btn-reset"
+      >
+        REINICIAR
+      </btn>
+      <btn
+        borderColor="kiwi-3"
+        backgroundColor="kiwi-2"
+        class="btn-add"
+      >
+        AGREGAR
+      </btn>
+    </floating-bar>
   </grid>
 </template>
 
 <script>
 
+import InputTime from '~/components/InputTime'
+import Btn from '~/components/Btn'
+import Icon from '~/components/Icon'
+import FloatingBar from '~/components/FloatingBar'
 import Grid from '~/components/Grid'
 import GridItem from '~/components/GridItem'
 import Menu from '~/components/Menu'
-import InputTime from '~/components/InputTime'
+import SelectTime from '~/components/SelectTime'
 import InputColor from '~/components/InputColor'
+import InputTitle from '~/components/InputTitle'
 import Container from '~/components/Container'
 
 export default {
@@ -75,43 +87,37 @@ export default {
     Grid,
     GridItem,
     Menu,
-    InputTime,
+    SelectTime,
     Container,
     InputColor,
+    InputTitle,
+    FloatingBar,
+    Btn,
+    Icon,
+    InputTime,
   },
 
   data () {
     return {
       time: {
         hours: 0,
-        minutes: 0,
+        minutes: 1,
         seconds: 0,
       },
-      theme: 'kiwi'
+      theme: 'banana',
+      title: '',
     }
-  }
+  },
 }
 </script>
 
 <style scoped>
-.input-title {
-  width: 100%;
-  border: 0;
-  background-color: transparent;
-  font-size: var(--fs-headline);
-  padding: 10px 0;
-  outline: 0;
-  border-bottom: 2px solid var(--color-cloud-3);
-  margin-bottom: 20px;
+
+.btn-reset {
+  margin-right: 5px;
+}
+.btn-add {
+  margin-left: 5px;
 }
 
-.time .title {
-  font-size: var(--fs-headline);
-  margin: 0;
-  margin-bottom: 5px;
-}
-
-.time {
-  margin-bottom: 20px;
-}
 </style>

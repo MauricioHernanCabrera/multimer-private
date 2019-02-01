@@ -1,124 +1,76 @@
 <template>
-  <div class="input-time">
-    <ul class="list-of-time">
-      <li
-        class="item"
-        :class="[{ 'selected': item.selected }, item.selected? `bg-${theme}-2` : '']"
-        v-for="item in listOfTime"
-        :key="item.number"
-        :Value="item.number"
-        @click="changeValue">
-        {{ item.number }}
-      </li>
-    </ul>
-    <p class="title">{{ title }}</p>
+  <div class="time">
+    <p class="title">Time</p>
+    <grid
+      :columns="columns"
+      :rows="1"
+      :areas="['hours', 'minutes', 'seconds']"
+    >
+      <grid-item area="hours" key="hours">
+        <slot name="hours"></slot>
+      </grid-item>
+
+      <grid-item area="minutes" key="seconds">
+        <slot name="minutes"></slot>
+      </grid-item>
+
+      <grid-item area="seconds" key="minutes">
+        <slot name="seconds"></slot>
+      </grid-item>
+    </grid>
   </div>
 </template>
 
 <script>
+
+import Grid from '~/components/Grid'
+import GridItem from '~/components/GridItem'
+
 export default {
-  props: {
-    init: {
-      required: true,
-      validator: (value) => {
-        return typeof value === 'number' && value >= 0
-      }
-    },
-
-    finish: {
-      required: true,
-      validator: (value) => {
-        return typeof value === 'number' && value >= 0
-      }
-    },
-
-    title: {
-      type: String,
-      required: true,
-    },
-
-    theme: {
-      type: String,
-    }
+  components: {
+    Grid,
+    GridItem,
   },
 
   data () {
     return {
-      listOfTime: []
+      columns: 3,
     }
   },
 
   mounted () {
-    console.log(this.theme)
-    for (let i = this.init; i <= this.finish; i++) {
-      this.listOfTime.push({
-        number: i,
-        selected: false,
-      })
-    }
-    this.listOfTime[0].selected = true
+    window.addEventListener('resize', this.resizeGrid)
+    this.resizeGrid()
+  },
+
+  beforeDestroy () {
+    window.removeEventListener('resize', this.resizeGrid)
   },
 
   methods: {
-    changeValue (event) {
-      this.$emit('input', Number(event.target.value))
+    resizeGrid (event) {
+      const { innerWidth } = window
 
-      const timeIndex = this.listOfTime.findIndex((item) => item.number === Number(event.target.value))
-      const selectedIndex = this.listOfTime.findIndex((item) => item.selected)
-      this.listOfTime[selectedIndex].selected = false
-      this.listOfTime[timeIndex].selected = true
+      if (innerWidth <= 300) {
+        this.columns = 1
+      } else {
+        this.columns = 3
+      }
     }
   }
 }
 </script>
 
 <style scoped>
-.input-time {}
 
-.input-time .title {
-  text-align: center;
-  font-size: var(--fs-subheading);
-}
-
-.input-time .list-of-time {
-  width: 100%;
-  height: 204px;
-  overflow-y: scroll;
-  box-sizing: border-box;
-  padding: 0;
+.time .title {
+  font-size: var(--fs-headline);
   margin: 0;
-  list-style: none;
-  text-align: center;
-  border: 2px solid var(--color-cloud-3);
-  border-radius: 5px;
+  margin-bottom: 5px;
 }
 
-.input-time .list-of-time .item {
-  padding: 10px;
-  cursor: pointer;
-  transition: .3s;
-  font-size: var(--fs-title);
-  font-weight: 700;
-  user-select: none;
+.time {
+  margin-bottom: 20px;
 }
 
-.input-time .list-of-time .item.selected {
-  /* background: var(--color-blueberry-3); */
-  color: var(--color-creme);
-}
-
-/* width */
-.input-time .list-of-time::-webkit-scrollbar {
-  width: 10px;
-}
-
-/* Handle */
-.input-time .list-of-time::-webkit-scrollbar-thumb {
-  background: var(--color-cloud-3);
-}
-
-/* Handle on hover */
-/* .input-time .list-of-time::-webkit-scrollbar-thumb:hover { */
-  /* background: var(--color-blueberry-3); */
-/* } */
 </style>

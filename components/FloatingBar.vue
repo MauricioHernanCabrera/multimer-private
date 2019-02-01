@@ -5,7 +5,14 @@
     left? 'floating-bar--left' : '',
     right? 'floating-bar--right' : '',
   ]">
-    <container class="container" :class="[justifyContent]">
+    <container
+      class="container"
+      :class="[
+        justifyContent,
+        backgroundColor? `bg-${backgroundColor}` : '',
+        borderColor? `bc-${borderColor}` : ''
+      ]"
+    >
       <slot></slot>
     </container>
   </div>
@@ -34,6 +41,16 @@ export default {
     right: {
       type: Boolean,
       default: true
+    },
+
+    backgroundColor: {
+      type: String,
+      default: ''
+    },
+
+    borderColor: {
+      type: String,
+      default: ''
     },
 
     justifyContentFlexStart: {
@@ -106,5 +123,7 @@ export default {
 
 .container {
   display: flex;
+  border-top-width: 2px;
+  border-top-style: solid;
 }
 </style>

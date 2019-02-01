@@ -27,6 +27,10 @@ import {
 import Grid from '~/components/Grid'
 
 export default {
+  props: {
+    value: {},
+  },
+
   components: {
     Grid,
   },
@@ -40,6 +44,12 @@ export default {
   mounted () {
     this.listOfColor = THEME.map((t) => ({ value: t, selected: false }))
     this.listOfColor[0].selected = true
+
+    console.log(this.value)
+    const colorIndex = this.listOfColor.findIndex((item) => item.value === this.value)
+    if (colorIndex >= 0) {
+      this.changeValue(this.value)
+    }
   },
 
   methods: {

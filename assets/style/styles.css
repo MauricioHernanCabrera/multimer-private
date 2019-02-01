@@ -353,3 +353,9 @@ body {
 .c-pointer {
   cursor: pointer;
 }
+
+/* .text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+} */
