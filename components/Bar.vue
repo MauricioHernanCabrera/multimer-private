@@ -39,6 +39,7 @@ export default {
   height: 16px;
   left: 0;
   bottom: -4px;
+  transition: 1s;
 }
 
 </style>

@@ -1,25 +1,42 @@
 <template>
-  <container>
-    <multimer-list>
-      <multimer-item :timer="timer"/>
-    </multimer-list>
+  <grid
+    :columns="1"
+    rows="54px 1fr"
+    :areas="['header', 'pages']"
+    :gap="0"
+    class="layout"
+  >
+    <grid-item area="header" key="header">
+      <Menu/>
+    </grid-item>
 
-    <floating-bar justifyContentFlexEnd>
-      <btn
-        borderColor="licorice-3"
-        backgroundColor="licorice-2"
-        icon
-        large
-      >
-        <icon>add</icon>
-      </btn>
-    </floating-bar>
-  </container>
+    <grid-item area="pages" key="pages">
+      <container>
+        <multimer-list>
+          <multimer-item v-for="timer in $store.state.timers" :key="timer.id" :timer="timer"/>
+        </multimer-list>
+
+        <floating-bar justifyContentFlexEnd>
+          <btn
+            borderColor="licorice-3"
+            backgroundColor="licorice-2"
+            icon
+            large
+          >
+            <icon>add</icon>
+          </btn>
+        </floating-bar>
+      </container>
+    </grid-item>
+  </grid>
 </template>
 
 <script>
 
 
+import Grid from '~/components/Grid'
+import GridItem from '~/components/GridItem'
+import Menu from '~/components/Menu'
 import MultimerList from '~/components/MultimerList'
 import MultimerItem from '~/components/MultimerItem'
 import Btn from '~/components/Btn'
@@ -38,53 +55,18 @@ export default {
     Container,
     MultimerItem,
     MultimerList,
+    Menu,
+    Grid,
+    GridItem
   },
 
-  data() {
+  data () {
     return {
-      // newTimer,
-      timer: {
-        id: Date.now(),
-        title: 'Pizza',
-        time: {
-          hours: 0,
-          minutes: 0,
-          seconds: 10
-        },
-        defaultTime: {
-          hours: 0,
-          minutes: 0,
-          seconds: 10
-        },
-        active: false,
-        interval: null,
-        theme: 'kiwi',
-      },
     }
   },
 
-
-
   methods: {
-    removeTimer (timer) {
 
-    },
-
-    editTimer (timer) {
-
-    },
-
-    restartTimer (timer) {
-
-    },
-
-    stopTimer (timer) {
-
-    },
-
-    startTimer (timer) {
-
-    },
     // submitNewTimer () {
     //   const cloneNewTimer = JSON.parse(JSON.stringify(this.newTimer))
 

@@ -1,5 +1,9 @@
 <template>
-  <i class="icon material-icons" :class="[fontSize, { 'c-pointer': cursorPointer }]" :style="{ fontSize: this.size? `${this.size}px` : '' }">
+  <i
+    class="icon material-icons"
+    :class="[fontSize, { 'c-pointer': cursorPointer }, { 'icon--disabled': disabled }]"
+    :style="{ fontSize: this.size? `${this.size}px` : '' }"
+    :disabled="disabled">
     <slot></slot>
   </i>
 </template>
@@ -25,6 +29,11 @@ export default {
     cursorPointer: {
       type: Boolean,
       default: true,
+    },
+
+    disabled: {
+      type: Boolean,
+      default: false,
     }
   },
 
@@ -38,8 +47,11 @@ export default {
 
 <style scoped>
 
-.icon {
+.icon {}
 
+.icon--disabled {
+  cursor: not-allowed;
+  color: var(--color-cloud-1);
 }
 
 .icon--small {

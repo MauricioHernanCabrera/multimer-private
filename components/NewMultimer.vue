@@ -7,15 +7,15 @@
     class="layout"
   >
     <grid-item area="header" key="header">
-      <Menu withArrowBack title="Nuevo Temporizador"/>
+      <Menu withArrowBack title="New multimer"/>
     </grid-item>
 
     <grid-item area="content" key="content">
       <container>
-        <input class="input-title" type="text" placeholder="Titulo">
+        <input class="input-title" type="text" placeholder="Title">
 
         <div class="time">
-          <p class="title">Tiempo</p>
+          <p class="title">Time</p>
           <grid
             :columns="3"
             :rows="1"
@@ -23,6 +23,7 @@
           >
             <grid-item area="hours" key="hours">
               <input-time
+                :theme="theme"
                 :init="0"
                 :finish="23"
                 title="Hora(s)"
@@ -32,6 +33,7 @@
 
             <grid-item area="minutes" key="minutes">
               <input-time
+                :theme="theme"
                 :init="0"
                 :finish="59"
                 title="Minuto(s)"
@@ -41,6 +43,7 @@
 
             <grid-item area="seconds" key="seconds">
               <input-time
+                :theme="theme"
                 :init="0"
                 :finish="59"
                 title="Segundo(s)"
@@ -84,7 +87,7 @@ export default {
         minutes: 0,
         seconds: 0,
       },
-      theme: 0
+      theme: 'kiwi'
     }
   }
 }

@@ -3,7 +3,7 @@
     <ul class="list-of-time">
       <li
         class="item"
-        :class="[{ 'selected': item.selected }]"
+        :class="[{ 'selected': item.selected }, item.selected? `bg-${theme}-2` : '']"
         v-for="item in listOfTime"
         :key="item.number"
         :Value="item.number"
@@ -36,6 +36,10 @@ export default {
       type: String,
       required: true,
     },
+
+    theme: {
+      type: String,
+    }
   },
 
   data () {
@@ -45,6 +49,7 @@ export default {
   },
 
   mounted () {
+    console.log(this.theme)
     for (let i = this.init; i <= this.finish; i++) {
       this.listOfTime.push({
         number: i,
@@ -98,7 +103,7 @@ export default {
 }
 
 .input-time .list-of-time .item.selected {
-  background: var(--color-blueberry-3);
+  /* background: var(--color-blueberry-3); */
   color: var(--color-creme);
 }
 
@@ -113,7 +118,7 @@ export default {
 }
 
 /* Handle on hover */
-.input-time .list-of-time::-webkit-scrollbar-thumb:hover {
-  background: var(--color-blueberry-3);
-}
+/* .input-time .list-of-time::-webkit-scrollbar-thumb:hover { */
+  /* background: var(--color-blueberry-3); */
+/* } */
 </style>

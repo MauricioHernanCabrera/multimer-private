@@ -9,13 +9,13 @@
     <div class="timer-header">
       <h2 class="title">{{ timer.title }}</h2>
 
-      <div v-if="!timer.active" class="actions">
+      <div class="actions">
 
-        <icon @click="$emit('removeTimer', timer)">
+        <icon @click="$store.dispatch('removeTimer', timer.id)" :disabled="timer.active">
           delete
         </icon>
 
-        <icon @click="$emit('editTimer', timer)">
+        <icon @click="$store.dispatch('editTimer', timer.id)" :disabled="timer.active">
           edit
         </icon>
 
@@ -42,12 +42,11 @@
       <span>{{ timer.time.seconds | leftPad }}s</span>
     </p>
 
-
     <div class="time-actions">
       <btn
         :backgroundColor="`${timer.theme}-2`"
         :borderColor="`${timer.theme}-3`"
-        @click="$emit('restartTimer', timer)">
+        @click="$store.dispatch('restartTimer', timer.id)">
         <icon>
           stop
         </icon>
@@ -57,7 +56,7 @@
         v-if="timer.active"
         :backgroundColor="`${timer.theme}-2`"
         :borderColor="`${timer.theme}-3`"
-        @click="$emit('stopTimer', timer)">
+        @click="$store.dispatch('stopTimer', timer.id)">
         <icon>
           pause
         </icon>
@@ -67,7 +66,7 @@
         v-else
         :backgroundColor="`${timer.theme}-2`"
         :borderColor="`${timer.theme}-3`"
-        @click="$emit('startTimer', timer)">
+        @click="$store.dispatch('startTimer', timer.id)">
         <icon>
           play_arrow
         </icon>
@@ -101,6 +100,10 @@ export default {
     Bar,
   },
 
+  // mounted () {
+  //   this.$store.dispatch('startTimer', this.timer.id)
+  // },
+
   methods: {
     percentageOfTime,
   },
@@ -118,8 +121,6 @@ export default {
   color: white;
   padding: 20px;
   border-radius: 10px;
-  grid-row-end: span 1;
-  user-select: none;
   position: relative;
 }
 
@@ -131,7 +132,6 @@ export default {
 }
 
 .multimer-item .timer-header .title {
-  margin: 0;
   flex: 1;
   margin: 0;
   font-weight: 700;
@@ -145,10 +145,8 @@ export default {
 .multimer-item .time-text {
   font-size: 20px;
   font-weight: 700;
-  margin: 0;
   margin: 10px 0;
 }
-  {/* font-size: var(--fs-display-1); */}
 
 .multimer-item .time-text span {}
 .multimer-item .time-text span:after {

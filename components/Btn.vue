@@ -9,6 +9,8 @@
       `${icon? 'btn--icon' : ''}`
     ]"
     :type="type"
+    @click="$emit('click', $event)"
+    :disabled="disabled"
   >
     <slot></slot>
   </button>
@@ -81,7 +83,7 @@ export default {
   computed: {
     size () {
       if (this.icon) {
-        return this.block? 'btn--icon-block' : this.small? 'btn--icon-small' : this.large? 'btn--icon-large' : ''
+        return this.small? 'btn--icon-small' : this.large? 'btn--icon-large' : ''
       } else {
         return this.block? 'btn--block' : this.small? 'btn--small' : this.large? 'btn--large' : ''
       }
@@ -104,7 +106,7 @@ export default {
   user-select: none;
   font-weight: 700;
   font-family: var(--font-family);
-  transition: .1s ease;
+  transition: 0s ease;
   border-width: 2px;
   border-style: solid;
   cursor: pointer;
@@ -112,7 +114,7 @@ export default {
   border-radius: 10px;
   border-bottom-width: 6px;
 
-  display: inline-flex;
+  display: flex;
   justify-content: center;
   align-items: center;
 
@@ -141,9 +143,6 @@ export default {
 }
 
 .btn--block {
-  font-size: 15px;
-  height: 44px;
-  padding: 0 32px;
   width: 100%;
 }
 
@@ -184,6 +183,5 @@ export default {
   border-color: var(--color-cloud-3);
   background-color: var(--color-cloud-2);
   color: var(--color-creme);
-  pointer-events: none;
 }
 </style>

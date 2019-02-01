@@ -1,6 +1,6 @@
 <template>
   <div class="input-color" v-if="listOfColor.length">
-    <p class="title">Colores</p>
+    <p class="title">Color</p>
     <grid
       class="list-of-color"
       columns="repeat(auto-fill, 75px)"
@@ -45,7 +45,6 @@ export default {
   methods: {
     changeValue (value) {
       this.$emit('input', value)
-      console.log(this.listOfColor)
       const colorIndex = this.listOfColor.findIndex((item) => item.value === value)
       const selectedIndex = this.listOfColor.findIndex((item) => item.selected)
 
