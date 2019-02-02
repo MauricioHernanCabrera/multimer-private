@@ -10,7 +10,7 @@
       <grid-item area="header" key="header" class="header">
         <Menu
           withArrowBack
-          title="New multimer"
+          title="Nuevo multimer"
           @clickArrowBack="$store.commit('setPage', 'multimer')"
           @clickTitle="$store.commit('setPage', 'multimer')"
         />

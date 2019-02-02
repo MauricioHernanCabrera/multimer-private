@@ -55,9 +55,15 @@ const newTimer = {
   theme: 'kiwi',
 }
 
+const PATTERN_VIBRATE_FINISH_TIMER = [500, 250, 500, 250, 500]
+
+const PATTERN_VIBRATE_START_TIMER = [200]
+
 export {
   COLORS_ARRAY,
   THEME,
   TYPES_OF_BUTTONS,
-  newTimer
+  newTimer,
+  PATTERN_VIBRATE_FINISH_TIMER,
+  PATTERN_VIBRATE_START_TIMER,
 }

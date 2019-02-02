@@ -3,68 +3,86 @@ import {
   finishedTheTimer,
 } from '~/helpers/time'
 import {
-  newTimer
+  newTimer,
+  PATTERN_VIBRATE_FINISH_TIMER,
+  PATTERN_VIBRATE_START_TIMER
 } from '~/helpers/const'
-
 import {
   showNotification,
   enableNotifications
 } from '~/helpers/notifications'
+import { vibrate } from '~/helpers/vibrate'
+import { sayMessage } from '~/helpers/voice'
 
 export const state = () => ({
-  timers: [],
-
-  page: 'multimer',
-
   editTimer: {},
+
+  historyList: [],
 
   newTimer,
 
-  historyList: [],
+  page: 'multimer',
+
+  timers: [],
 })
 
 export const getters = {
+  ////////////////////////////////////// TIMER
   timer: ({ timers }) => (id) => {
     return findById(timers, id)
   }
 }
 
 export const mutations = {
-  setPage (state, page = 'multimer') {
-    state.page = page
-  },
+  ////////////////////////////////////// EDIT TIMER
 
-  setHistory (state, history = []) {
-    state.historyList = history
-  },
-
-  setNewTimer (state, timer = newTimer) {
-    state.newTimer = timer
-  },
-
-  setEditTimer (state, timer = {}) {
+  setEditTimer(state, timer = {}) {
     state.editTimer = timer
   },
 
-  updateEditTimer (state, data) {
+  updateEditTimer(state, data) {
     state.editTimer = {
       ...state.editTimer,
       ...JSON.parse(JSON.stringify(data))
     }
   },
 
-  updateNewTimer (state, data) {
+  ////////////////////////////////////// HISTORY
+
+  addHistory(state, history) {
+    state.historyList.unshift(history)
+  },
+
+  setHistory(state, history = []) {
+    state.historyList = history
+  },
+
+  ////////////////////////////////////// NEW TIMER
+
+  setNewTimer(state, timer = newTimer) {
+    state.newTimer = timer
+  },
+
+  updateNewTimer(state, data) {
     state.newTimer = {
       ...state.newTimer,
       ...JSON.parse(JSON.stringify(data))
     }
   },
 
-  addHistory (state, history) {
-    state.historyList.unshift(history)
+  ////////////////////////////////////// TIMER
+
+  addTimer(state, timer) {
+    state.timers.push(timer)
   },
 
-  updateTimer (state, { timerId, data }) {
+  removeTimer(state, timerId) {
+    console.log('Entro')
+    const indexTimer = findById(state.timers, timerId)
+    state.timers.splice(indexTimer, 1)
+  },
+
+  updateTimer(state, { timerId, data }) {
     const timer = findById(state.timers, timerId)
 
     state.timers = [
@@ -73,59 +91,21 @@ export const mutations = {
     ]
   },
 
-  addTimer (state, timer) {
-    state.timers.push(timer)
+  ////////////////////////////////////// PAGE
+
+  setPage(state, page = 'multimer') {
+    state.page = page
   },
 
-  removeTimer (state, timerId) {
-    console.log('Entro')
-    const indexTimer = findById(state.timers, timerId)
-    state.timers.splice(indexTimer, 1)
-  },
+  //////////////////////////////////////
 }
 
 export const actions = {
-  async showNotification ({}, title) {
-    try {
-      await enableNotifications()
-      showNotification(title)
-    } catch (e) {}
-  },
-
-  activeMessage ({}, title) {
-    try {
-      const voice = window.speechSynthesis.getVoices().find((voice) => voice.lang === 'en-US')
-      const message = new SpeechSynthesisUtterance(`${title}: !Terminada¡`)
-      message.voice = voice
-      window.speechSynthesis.speak(message)
-      window.navigator.vibrate([500, 250, 500, 250, 500])
-    } catch (e) {}
-  },
-
-  vibrateButton ({}) {
-    try {
-      window.navigator.vibrate([200])
-    } catch (e) {}
-  },
+  ////////////////////////////////////// TIMER
 
   removeTimer ({ dispatch }, timerId) {
     dispatch('stopTimer', timerId)
     commit('removeTimer', timerId)
-  },
-
-  editTimer({ commit }, { id, title, time, defaultTime, active, interval, theme }) {
-    const payload = {
-      timerId: id,
-      data: {
-        title,
-        time,
-        defaultTime,
-        active,
-        interval,
-        theme,
-      }
-    }
-    commit('updateTimer', payload)
   },
 
   restartTimer ({ getters, commit }, timerId) {
@@ -166,7 +146,7 @@ export const actions = {
     if (finishedTheTimer(timer.time)) {
       dispatch('restartTimer', timerId)
     } else {
-      dispatch('vibrateButton')
+      vibrate(PATTERN_VIBRATE_START_TIMER)
       const interval = setInterval(() => dispatch('reduceTime', timerId), 1000)
       const payload = {
         timerId,
@@ -212,8 +192,11 @@ export const actions = {
     const newTimer = getters.timer(timerId)
 
     if (finishedTheTimer(newTimer.time)) {
-      dispatch('activeMessage', newTimer.title)
-      dispatch('showNotification', newTimer.title)
+      sayMessage(newTimer.title)
+      enableNotifications()
+      showNotification(newTimer.title)
+      vibrate(PATTERN_VIBRATE_FINISH_TIMER)
+
       commit('addHistory', {
         id: Date.now() - newTimer.id,
         message: `Finished ${newTimer.title}!`,
@@ -223,4 +206,6 @@ export const actions = {
       dispatch('restartTimer', newTimer.id)
     }
   }
+
+  //////////////////////////////////////
 }

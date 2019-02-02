@@ -15,7 +15,7 @@
           @click="$emit('clickHistory')"
         >
           <icon style="margin-right: 2px;">history</icon>
-          History
+          Historial
         </btn>
       </a>
       <!-- <nav class="navigation">

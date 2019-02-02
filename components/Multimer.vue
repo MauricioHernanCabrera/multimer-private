@@ -41,7 +41,6 @@
 
 <script>
 
-
 import Grid from '~/components/Grid'
 import GridItem from '~/components/GridItem'
 import Menu from '~/components/Menu'
@@ -51,9 +50,6 @@ import Btn from '~/components/Btn'
 import Container from '~/components/Container'
 import Icon from '~/components/Icon'
 import FloatingBar from '~/components/FloatingBar'
-
-import {
-} from '~/helpers/types'
 
 export default {
   components: {

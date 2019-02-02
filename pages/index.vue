@@ -5,7 +5,7 @@
         enter-active-class="animated bounceInLeft p-absolute"
         leave-active-class="animated bounceOutLeft p-absolute"
       >
-        <multimer v-if="$store.state.page === 'multimer'"/>
+        <multimer style="width: 100vw;" v-if="$store.state.page === 'multimer'"/>
       </transition>
 
       <transition
@@ -13,9 +13,9 @@
         leave-active-class="animated bounceOutRight p-absolute"
         mode="in-out"
       >
-        <new-multimer v-if="$store.state.page === 'new-multimer'" key="new-multimer"/>
-        <edit-multimer v-else-if="$store.state.page === 'edit-multimer'" key="edit-multimer"/>
-        <history v-else-if="$store.state.page === 'history'" key="history"/>
+        <new-multimer style="width: 100vw;" v-if="$store.state.page === 'new-multimer'" key="new-multimer"/>
+        <edit-multimer style="width: 100vw;" v-else-if="$store.state.page === 'edit-multimer'" key="edit-multimer"/>
+        <history style="width: 100vw;" v-else-if="$store.state.page === 'history'" key="history"/>
       </transition>
     </no-ssr>
   </div>

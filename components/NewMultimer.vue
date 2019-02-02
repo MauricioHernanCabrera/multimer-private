@@ -10,7 +10,7 @@
       <grid-item area="header" key="header" class="header">
         <Menu
           withArrowBack
-          title="New multimer"
+          title="Nuevo multimer"
           @clickArrowBack="$store.commit('setPage', 'multimer')"
           @clickTitle="$store.commit('setPage', 'multimer')"
         />
@@ -206,6 +206,58 @@ export default {
           active: false,
           interval: null,
         }
+
+        const {
+          hours,
+          minutes,
+          seconds
+        } = newTimer.time
+
+        ga('send', 'event', {
+          eventCategory: 'Tiempo más elegido - Completo',
+          eventAction: 'click',
+          eventLabel: `${hours}:${minutes}:${seconds}`
+        })
+
+        ga('send', 'event', {
+          eventCategory: 'Tiempo más elegido - Hora',
+          eventAction: 'click',
+          eventLabel: `${hours}`
+        })
+
+        ga('send', 'event', {
+          eventCategory: 'Tiempo más elegido - Minutos',
+          eventAction: 'click',
+          eventLabel: `${minutes}`
+        })
+
+        ga('send', 'event', {
+          eventCategory: 'Tiempo más elegido - Segundos',
+          eventAction: 'click',
+          eventLabel: `${seconds}`
+        })
+
+        ga('send', 'event', {
+          eventCategory: 'Tiempo más elegido - Segundos',
+          eventAction: 'click',
+          eventLabel: `${seconds}`
+        })
+
+
+        const { title, theme } = newTimer
+
+        ga('send', 'event', {
+          eventCategory: 'Titulo más elegido',
+          eventAction: 'click',
+          eventLabel: `${title}`
+        })
+
+        ga('send', 'event', {
+          eventCategory: 'Color más elegido',
+          eventAction: 'click',
+          eventLabel: `${theme}`
+        })
+
         this.$store.commit('addTimer', payload)
         this.$store.commit('setPage', 'multimer')
         this.resetTimer()
