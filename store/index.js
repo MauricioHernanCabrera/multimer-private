@@ -6,6 +6,11 @@ import {
   newTimer
 } from '~/helpers/const'
 
+import {
+  showNotification,
+  enableNotifications
+} from '~/helpers/notifications'
+
 export const state = () => ({
   timers: [],
 
@@ -80,10 +85,17 @@ export const mutations = {
 }
 
 export const actions = {
+  async showNotification ({}, title) {
+    try {
+      await enableNotifications()
+      showNotification(title)
+    } catch (e) {}
+  },
+
   activeMessage ({}, title) {
     try {
       const voice = window.speechSynthesis.getVoices().find((voice) => voice.lang === 'en-US')
-      const message = new SpeechSynthesisUtterance(`Finished ${title}!`)
+      const message = new SpeechSynthesisUtterance(`${title}: !Terminada¡`)
       message.voice = voice
       window.speechSynthesis.speak(message)
       window.navigator.vibrate([500, 250, 500, 250, 500])
@@ -201,6 +213,7 @@ export const actions = {
 
     if (finishedTheTimer(newTimer.time)) {
       dispatch('activeMessage', newTimer.title)
+      dispatch('showNotification', newTimer.title)
       commit('addHistory', {
         id: Date.now() - newTimer.id,
         message: `Finished ${newTimer.title}!`,

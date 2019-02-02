@@ -31,9 +31,9 @@
             <icon>add</icon>
           </btn>
         </div>
-        <div class="ads">
+        <!-- <div class="ads">
           Anuncio
-        </div>
+        </div> -->
       </container>
     </floating-bar>
   </grid>
@@ -96,7 +96,7 @@ export default {
   flex-direction: column;
 }
 .floating-bar-container .container-btn {
-  padding: 10px;
+  padding: 20px;
 }
 .floating-bar-container .ads {
   background: var(--color-cloud-1);

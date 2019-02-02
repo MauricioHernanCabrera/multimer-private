@@ -21,7 +21,6 @@ module.exports = {
     'animate.css',
     'epic-spinners/dist/lib/epic-spinners.min.css',
     '~/assets/style/styles.css',
-    // 'normalize.css',
   ],
 
   plugins: [
@@ -37,6 +36,6 @@ module.exports = {
   ],
 
   build: {
-    extend(config, ctx) { }
+    extend(config, ctx) {}
   }
 }

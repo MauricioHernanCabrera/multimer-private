@@ -1,4 +1,4 @@
-# bard-time
+# Multimer
 
 > Web-App para medir el tiempo
 

@@ -28,6 +28,9 @@ import Multimer from '~/components/Multimer'
 import NewMultimer from '~/components/NewMultimer'
 import EditMultimer from '~/components/EditMultimer'
 import History from '~/components/History'
+import {
+  enableNotifications
+} from '~/helpers/notifications'
 
 export default {
   components: {
@@ -36,6 +39,10 @@ export default {
     Modal,
     EditMultimer,
     History,
+  },
+
+  mounted () {
+    setTimeout(enableNotifications, 10000)
   },
 }
 </script>
@@ -49,5 +56,6 @@ export default {
   right: 0;
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 </style>

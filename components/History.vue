@@ -21,6 +21,7 @@
           <history-item
             v-for="history in $store.state.historyList"
             :key="history.key"
+            :history="history"
           ></history-item>
         </history-list>
       </container>
@@ -59,11 +60,6 @@ export default {
     Container,
     HistoryList,
     HistoryItem,
-  },
-
-  data () {
-    return {
-    }
   },
 }
 </script>
