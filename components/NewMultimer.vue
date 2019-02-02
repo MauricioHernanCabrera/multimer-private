@@ -208,6 +208,7 @@ export default {
         }
         this.$store.commit('addTimer', payload)
         this.$store.commit('setPage', 'multimer')
+        this.resetTimer()
       }
     },
 
