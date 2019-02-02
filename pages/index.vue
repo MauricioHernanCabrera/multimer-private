@@ -1,35 +1,23 @@
 <template>
   <div>
+    <no-ssr>
+      <transition
+        enter-active-class="animated bounceInLeft p-absolute"
+        leave-active-class="animated bounceOutLeft p-absolute"
+      >
+        <multimer v-if="$store.state.page === 'multimer'"/>
+      </transition>
 
-    <multimer/>
-
-
-    <transition
-      enter-active-class="animated fadeInRightBig"
-      leave-active-class="animated fadeOutRightBig"
-    >
-      <modal v-if="$store.state.page === 'new-multimer'">
-        <new-multimer/>
-      </modal>
-    </transition>
-
-    <transition
-      enter-active-class="animated fadeInRightBig"
-      leave-active-class="animated fadeOutRightBig"
-    >
-      <modal v-if="$store.state.page === 'edit-multimer'">
-        <edit-multimer/>
-      </modal>
-    </transition>
-
-    <transition
-      enter-active-class="animated fadeInRightBig"
-      leave-active-class="animated fadeOutRightBig"
-    >
-      <modal v-if="$store.state.page === 'history'">
-        <history/>
-      </modal>
-    </transition>
+      <transition
+        enter-active-class="animated bounceInRight p-absolute"
+        leave-active-class="animated bounceOutRight p-absolute"
+        mode="in-out"
+      >
+        <new-multimer v-if="$store.state.page === 'new-multimer'" key="new-multimer"/>
+        <edit-multimer v-else-if="$store.state.page === 'edit-multimer'" key="edit-multimer"/>
+        <history v-else-if="$store.state.page === 'history'" key="history"/>
+      </transition>
+    </no-ssr>
   </div>
 </template>
 
@@ -53,5 +41,13 @@ export default {
 </script>
 
 <style scoped>
-
+.p-absolute {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
 </style>

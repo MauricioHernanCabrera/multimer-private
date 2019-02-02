@@ -1,31 +1,20 @@
 import {
   findById,
-  findIndexById,
   finishedTheTimer,
 } from '~/helpers/time'
+import {
+  newTimer
+} from '~/helpers/const'
 
 export const state = () => ({
-  timers: [
-    {
-      id: Date.now(),
-      title: 'Pizza',
-      time: {
-        hours: 0,
-        minutes: 0,
-        seconds: 3,
-      },
-      defaultTime: {
-        hours: 0,
-        minutes: 0,
-        seconds: 3,
-      },
-      active: false,
-      interval: null,
-      theme: 'kiwi',
-    }
-  ],
+  timers: [],
+
   page: 'multimer',
+
   editTimer: {},
+
+  newTimer,
+
   historyList: [],
 })
 
@@ -40,9 +29,28 @@ export const mutations = {
     state.page = page
   },
 
+  setHistory (state, history) {
+    state.historyList = history
+  },
+
+  setNewTimer (state, newTimer) {
+    state.newTimer = newTimer
+  },
+
+  setEditTimer (state, editTimer) {
+    state.editTimer = editTimer
+  },
+
   updateEditTimer (state, data) {
     state.editTimer = {
       ...state.editTimer,
+      ...JSON.parse(JSON.stringify(data))
+    }
+  },
+
+  updateNewTimer (state, data) {
+    state.newTimer = {
+      ...state.newTimer,
       ...JSON.parse(JSON.stringify(data))
     }
   },
@@ -72,13 +80,20 @@ export const mutations = {
 }
 
 export const actions = {
-  activeSound ({}, title) {
-    console.log(navigator.language)
-    const voice = window.speechSynthesis.getVoices().find((voice) => voice.lang === 'en-US')
-    const message = new SpeechSynthesisUtterance(`¡Finished ${title}!`)
-    message.voice = voice
-    window.speechSynthesis.speak(message)
-    window.navigator.vibrate([500, 250, 500, 250, 500])
+  activeMessage ({}, title) {
+    try {
+      const voice = window.speechSynthesis.getVoices().find((voice) => voice.lang === 'en-US')
+      const message = new SpeechSynthesisUtterance(`Finished ${title}!`)
+      message.voice = voice
+      window.speechSynthesis.speak(message)
+      window.navigator.vibrate([500, 250, 500, 250, 500])
+    } catch (e) {}
+  },
+
+  vibrateButton ({}) {
+    try {
+      window.navigator.vibrate([200])
+    } catch (e) {}
   },
 
   removeTimer ({ dispatch }, timerId) {
@@ -139,6 +154,7 @@ export const actions = {
     if (finishedTheTimer(timer.time)) {
       dispatch('restartTimer', timerId)
     } else {
+      dispatch('vibrateButton')
       const interval = setInterval(() => dispatch('reduceTime', timerId), 1000)
       const payload = {
         timerId,
@@ -184,7 +200,7 @@ export const actions = {
     const newTimer = getters.timer(timerId)
 
     if (finishedTheTimer(newTimer.time)) {
-      dispatch('activeSound', newTimer.title)
+      dispatch('activeMessage', newTimer.title)
       commit('addHistory', {
         id: Date.now() - newTimer.id,
         message: `Finished ${newTimer.title}!`,

@@ -7,7 +7,7 @@
       :gap="0"
       class="layout"
     >
-      <grid-item area="header" key="header">
+      <grid-item area="header" key="header" class="header">
         <Menu
           withArrowBack
           title="New multimer"
@@ -27,7 +27,7 @@
               :init="0"
               :finish="23"
               title="Hora(s)"
-              v-model="time.hours">
+              v-model="hours">
             </select-time>
 
             <select-time
@@ -36,7 +36,7 @@
               :init="0"
               :finish="59"
               title="Minuto(s)"
-              v-model="time.minutes">
+              v-model="minutes">
             </select-time>
 
             <select-time
@@ -45,7 +45,7 @@
               :init="0"
               :finish="59"
               title="Segundo(s)"
-              v-model="time.seconds">
+              v-model="seconds">
             </select-time>
           </input-time>
 
@@ -56,23 +56,25 @@
       </grid-item>
 
       <floating-bar justifyContentFlexEnd backgroundColor="cloud-1" borderColor="cloud-2">
-        <btn
-          borderColor="raspberry-3"
-          backgroundColor="raspberry-2"
-          class="btn-reset"
-          type="reset"
-        >
-          RESET
-        </btn>
-        <btn
-          borderColor="kiwi-3"
-          backgroundColor="kiwi-2"
-          class="btn-add"
-          type="submit"
-          :disabled="!isValid()"
-        >
-          ADD
-        </btn>
+        <container class="floating-bar-container" :paddingY="false">
+          <btn
+            borderColor="raspberry-3"
+            backgroundColor="raspberry-2"
+            class="btn-reset"
+            type="reset"
+          >
+            REINICIAR
+          </btn>
+          <btn
+            borderColor="kiwi-3"
+            backgroundColor="kiwi-2"
+            class="btn-add"
+            type="submit"
+            :disabled="!isValid()"
+          >
+            AGREGAR
+          </btn>
+        </container>
       </floating-bar>
     </grid>
   </form>
@@ -115,27 +117,92 @@ export default {
     InputTime,
   },
 
-  data () {
-    return {
-      time: {
-        hours: 0,
-        minutes: 0,
-        seconds: 0,
+  computed: {
+    title: {
+      get () {
+        return this.$store.state.newTimer.title
       },
-      theme: 'kiwi',
-      title: '',
-    }
+
+      set (title) {
+        const payload = {
+          title
+        }
+        this.$store.commit('updateNewTimer', payload)
+      }
+    },
+
+    theme: {
+      get () {
+        return this.$store.state.newTimer.theme
+      },
+
+      set (theme) {
+        const payload = {
+          theme
+        }
+        this.$store.commit('updateNewTimer', payload)
+      }
+    },
+
+    hours: {
+      get () {
+        return this.$store.state.newTimer.time.hours
+      },
+
+      set (hours) {
+        const payload = {
+          time: {
+            ...this.$store.state.newTimer.time,
+            hours
+          }
+        }
+        this.$store.commit('updateNewTimer', payload)
+      }
+    },
+
+    minutes: {
+      get () {
+        return this.$store.state.newTimer.time.minutes
+      },
+
+      set (minutes) {
+        const payload = {
+          time: {
+            ...this.$store.state.newTimer.time,
+            minutes
+          }
+        }
+        this.$store.commit('updateNewTimer', payload)
+      }
+    },
+
+    seconds: {
+      get () {
+        return this.$store.state.newTimer.time.seconds
+      },
+
+      set (seconds) {
+        const payload = {
+          time: {
+            ...this.$store.state.newTimer.time,
+            seconds
+          }
+        }
+        this.$store.commit('updateNewTimer', payload)
+      }
+    },
   },
 
   methods: {
     submitTimer () {
       if (this.isValid()) {
+        const { newTimer } = this.$store.state
         const payload = {
-          time: Object.assign({}, this.time),
-          theme: this.theme,
-          title: this.title,
+          time: Object.assign({}, newTimer.time),
+          theme: newTimer.theme,
+          title: newTimer.title,
           id: Date.now(),
-          defaultTime: Object.assign({}, this.time),
+          defaultTime: Object.assign({}, newTimer.time),
           active: false,
           interval: null,
         }
@@ -145,18 +212,21 @@ export default {
     },
 
     isValid () {
-      return isRequired(this.title) &&
-        timeToSeconds(this.time) > 0
+      return isRequired(this.$store.state.newTimer.title) &&
+        timeToSeconds(this.$store.state.newTimer.time) > 0
     },
 
     resetTimer () {
-      this.time = {
-        hours: 0,
-        minutes: 0,
-        seconds: 0,
+      const payload = {
+        time: {
+          hours: 0,
+          minutes: 0,
+          seconds: 0,
+        },
+        theme: 'kiwi',
+        title: ''
       }
-      this.theme = 'kiwi'
-      this.title = ''
+      this.$store.commit('updateNewTimer', payload)
     },
   }
 }
@@ -171,4 +241,19 @@ export default {
   margin-left: 5px;
 }
 
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 150;
+  background: var(--color-cloud-1);
+}
+
+.floating-bar-container {
+  display: flex;
+  justify-content: flex-end;
+  background: var(--color-cloud-1);
+  border-top: 2px solid var(--color-cloud-2);
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
 </style>

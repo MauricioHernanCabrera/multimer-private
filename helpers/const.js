@@ -45,8 +45,19 @@ const TYPES_OF_BUTTONS = [
   'reset'
 ]
 
+const newTimer = {
+  title: '',
+  time: {
+  hours: 0,
+    minutes: 0,
+      seconds: 0,
+  },
+  theme: 'kiwi',
+}
+
 export {
   COLORS_ARRAY,
   THEME,
-  TYPES_OF_BUTTONS
+  TYPES_OF_BUTTONS,
+  newTimer
 }

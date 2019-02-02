@@ -4,7 +4,9 @@
     :areas="[]"
     :gap="10"
   >
-    <slot></slot>
+    <slot>
+      Aun no se cargaron temporizadores
+    </slot>
   </grid>
 </template>
 
@@ -22,8 +24,8 @@ export default {
   },
 
   mounted () {
-    window.addEventListener('resize', this.resizeGrid)
     this.resizeGrid()
+    window.addEventListener('resize', this.resizeGrid)
   },
 
   beforeDestroy () {

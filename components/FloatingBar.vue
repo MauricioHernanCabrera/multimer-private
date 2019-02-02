@@ -5,21 +5,11 @@
     left? 'floating-bar--left' : '',
     right? 'floating-bar--right' : '',
   ]">
-    <container
-      class="container"
-      :class="[
-        justifyContent,
-        backgroundColor? `bg-${backgroundColor}` : '',
-        borderColor? `bc-${borderColor}` : ''
-      ]"
-    >
-      <slot></slot>
-    </container>
+    <slot></slot>
   </div>
 </template>
 
 <script>
-import Container from '~/components/Container'
 
 export default {
   props: {
@@ -52,52 +42,7 @@ export default {
       type: String,
       default: 'transparent'
     },
-
-    justifyContentFlexStart: {
-      type: Boolean,
-      default: false,
-    },
-
-    justifyContentFlexEnd: {
-      type: Boolean,
-      default: false,
-    },
-
-    justifyContentCenter: {
-      type: Boolean,
-      default: false,
-    },
-
-    justifyContentSpaceBetween: {
-      type: Boolean,
-      default: false,
-    },
-
-    justifyContentSpaceAround: {
-      type: Boolean,
-      default: false,
-    },
-
-    justifyContentInitial: {
-      type: Boolean,
-      default: false,
-    },
   },
-
-  components: {
-   Container
-  },
-
-  computed: {
-    justifyContent () {
-      return this.justifyContentFlexStart? 'justify-content-flex-start' :
-              this.justifyContentFlexEnd? 'justify-content-flex-end' :
-              this.justifyContentCenter? 'justify-content-center' :
-              this.justifyContentSpaceBetween? 'justify-content-space-between' :
-              this.justifyContentSpaceAround? 'justify-content-space-around' :
-              this.justifyContentInitial? 'justify-content-initial' : 'justify-content-inherit'
-    }
-  }
 }
 </script>
 
@@ -121,9 +66,9 @@ export default {
   right: 0;
 }
 
-.container {
-  display: flex;
-  border-top-width: 2px;
-  border-top-style: solid;
+@media (max-height: 350px) {
+  .floating-bar {
+    position: relative;
+  }
 }
 </style>

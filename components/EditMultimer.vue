@@ -7,7 +7,7 @@
       :gap="0"
       class="layout"
     >
-      <grid-item area="header" key="header">
+      <grid-item area="header" key="header" class="header">
         <Menu
           withArrowBack
           title="New multimer"
@@ -56,23 +56,25 @@
       </grid-item>
 
       <floating-bar justifyContentFlexEnd backgroundColor="cloud-1" borderColor="cloud-2">
-        <btn
-          borderColor="raspberry-3"
-          backgroundColor="raspberry-2"
-          class="btn-reset"
-          type="reset"
-        >
-          RESET
-        </btn>
-        <btn
-          borderColor="kiwi-3"
-          backgroundColor="kiwi-2"
-          class="btn-add"
-          type="submit"
-          :disabled="!isValid()"
-        >
-          UPDATE
-        </btn>
+        <container class="floating-bar-container" :paddingY="false">
+          <btn
+            borderColor="raspberry-3"
+            backgroundColor="raspberry-2"
+            class="btn-reset"
+            type="reset"
+          >
+            REINICIAR
+          </btn>
+          <btn
+            borderColor="kiwi-3"
+            backgroundColor="kiwi-2"
+            class="btn-add"
+            type="submit"
+            :disabled="!isValid()"
+          >
+            AGREGAR
+          </btn>
+        </container>
       </floating-bar>
     </grid>
   </form>
@@ -157,6 +159,7 @@ export default {
         this.$store.commit('updateEditTimer', payload)
       }
     },
+
     minutes: {
       get () {
         return this.$store.state.editTimer.time.minutes
@@ -172,6 +175,7 @@ export default {
         this.$store.commit('updateEditTimer', payload)
       }
     },
+
     seconds: {
       get () {
         return this.$store.state.editTimer.time.seconds
@@ -233,6 +237,22 @@ export default {
 }
 .btn-add {
   margin-left: 5px;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 150;
+  background: var(--color-cloud-1);
+}
+
+.floating-bar-container {
+  display: flex;
+  justify-content: flex-end;
+  background: var(--color-cloud-1);
+  border-top: 2px solid var(--color-cloud-2);
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 </style>

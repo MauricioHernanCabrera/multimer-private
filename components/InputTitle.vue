@@ -2,7 +2,7 @@
   <input
     class="input-title"
     type="text"
-    placeholder="Title"
+    placeholder="Titulo"
     :value="value"
     @input="$emit('input', $event.target.value)"/>
 </template>

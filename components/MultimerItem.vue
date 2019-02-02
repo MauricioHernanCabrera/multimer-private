@@ -18,20 +18,6 @@
         <icon @click="editTimer(timer)" :disabled="timer.active">
           edit
         </icon>
-
-        <!-- <Link
-          route="multimer-edit"
-          params={{
-            id: timer.get('id')
-          }}>
-          <a>
-            <icon
-              name="edit"
-              color="creme"
-              cursorPointer={true}/>
-          </a>
-        </Link> -->
-
       </div>
     </div>
 
@@ -99,10 +85,6 @@ export default {
     Btn,
     Bar,
   },
-
-  // mounted () {
-  //   this.$store.dispatch('startTimer', this.timer.id)
-  // },
 
   methods: {
     percentageOfTime,

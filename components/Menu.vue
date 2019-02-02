@@ -61,15 +61,18 @@ export default {
 </script>
 
 <style scoped>
+/*
+.header {
+} */
 
 .container {
   box-shadow: 0px 2px var(--color-cloud-2);
-  position: sticky;
 }
 
 .menu {
   /* border: 2px solid red; */
   /* height: 54px; */
+  /* position: sticky; */
   height: 100%;
   display: flex;
   align-items: center;

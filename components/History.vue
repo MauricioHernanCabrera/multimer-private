@@ -6,7 +6,7 @@
     :gap="0"
     class="layout"
   >
-    <grid-item area="header" key="header">
+    <grid-item area="header" key="header" class="header">
       <Menu
         withArrowBack
         title="History multimer"
@@ -17,17 +17,12 @@
 
     <grid-item area="content" key="content">
       <container>
-        <div class="history-list">
-          <div
-            class="history-item"
+        <history-list>
+          <history-item
             v-for="history in $store.state.historyList"
             :key="history.key"
-            :class="[`bg-${history.theme}-2`]"
-          >
-            <span class="message">{{ history.message }}</span>
-            <span class="created">{{ history.created | timeFormat }}</span>
-          </div>
-        </div>
+          ></history-item>
+        </history-list>
       </container>
     </grid-item>
   </grid>
@@ -35,6 +30,8 @@
 
 <script>
 
+import HistoryList from '~/components/HistoryList'
+import HistoryItem from '~/components/HistoryItem'
 import Btn from '~/components/Btn'
 import Icon from '~/components/Icon'
 import Grid from '~/components/Grid'
@@ -50,7 +47,7 @@ import {
   timeToSeconds
 } from '~/helpers/time'
 
-import moment from 'moment'
+
 
 export default {
   components: {
@@ -60,41 +57,25 @@ export default {
     GridItem,
     Menu,
     Container,
+    HistoryList,
+    HistoryItem,
   },
 
   data () {
     return {
     }
   },
-
-  filters: {
-    timeFormat (date) {
-      return moment(date).startOf('seconds').fromNow();
-    }
-  }
 }
 </script>
 
 <style scoped>
 
-.history-list {}
-.history-item {
-  margin-bottom: 10px;
-  padding: 20px;
-  border-radius: 10px;
-  color: var(--color-creme);
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
 
-.history-item .message {
-  font-weight: 700;
-  font-size: var(--fs-subheading);
-}
-.history-item .created {
-  font-size: var(--fs-caption);
 
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 150;
+  background: var(--color-cloud-1);
 }
 </style>

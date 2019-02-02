@@ -6,7 +6,7 @@
     :gap="0"
     class="layout"
   >
-    <grid-item area="pages" key="pages">
+    <grid-item area="pages" key="pages" class="pages">
       <nuxt class="pages"/>
     </grid-item>
   </grid>
@@ -29,5 +29,9 @@ export default {
 <style scoped>
 .layout {
   min-height: 100vh;
+  position: relative;
+}
+.pages {
+  width: 100%;
 }
 </style>
