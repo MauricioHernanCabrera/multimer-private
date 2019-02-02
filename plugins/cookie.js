@@ -12,12 +12,14 @@ export default function ({ store }) {
   store.commit('setNewTimer', newTimer)
   store.commit('setEditTimer', editTimer)
 
-  timers.forEach(timer => {
-    store.commit('addTimer', timer)
-    if (timer.active) {
-      store.dispatch('startTimer', timer.id)
-    }
-  })
+  if (timers) {
+    timers.forEach(timer => {
+      store.commit('addTimer', timer)
+      if (timer.active) {
+        store.dispatch('startTimer', timer.id)
+      }
+    })
+  }
 
   store.subscribe(() => {
     const data = store.state

@@ -25,20 +25,20 @@ export const getters = {
 }
 
 export const mutations = {
-  setPage (state, page) {
+  setPage (state, page = 'multimer') {
     state.page = page
   },
 
-  setHistory (state, history) {
+  setHistory (state, history = []) {
     state.historyList = history
   },
 
-  setNewTimer (state, newTimer) {
-    state.newTimer = newTimer
+  setNewTimer (state, timer = newTimer) {
+    state.newTimer = timer
   },
 
-  setEditTimer (state, editTimer) {
-    state.editTimer = editTimer
+  setEditTimer (state, timer = {}) {
+    state.editTimer = timer
   },
 
   updateEditTimer (state, data) {
