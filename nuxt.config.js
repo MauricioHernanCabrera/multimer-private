@@ -1,6 +1,6 @@
 const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
   router: {
-    base: '/'
+    base: '/multimer/'
   }
 } : {}
 
@@ -29,6 +29,8 @@ module.exports = {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1, user-scalable=no' },
       { hid: 'description', name: 'description', content: `${page.description}` },
+
+      { name: 'google', content: 'notranslate' },
 
       { name: 'twitter:card', content: 'summary' },
       { name: 'twitter:title', content: `${page.title}` },
@@ -74,6 +76,36 @@ module.exports = {
     '@nuxtjs/pwa',
     'cookie-universal-nuxt',
   ],
+
+  manifest: {
+    'name': 'Multimer',
+    'short_name': 'Multimer',
+    'lang': 'en_US',
+    'start_url': '/',
+    'scope': '/',
+    'display': 'standalone',
+    'background_color': '#ffffff',
+    'theme_color': '#DDDDDD',
+  },
+
+  icons: {},
+
+  workbox: {
+    runtimeCaching: [
+      {
+        urlPattern: '/^https:\/\/fonts.(?:googleapis|gstatic).com\/(.*)/',
+        handler: 'cacheFirst',
+        method: 'GET',
+        strategyOptions: {
+          cacheName: 'google-font-multimer',
+          cacheExpiration: {
+            maxEntries: 10000,
+            maxAgeSeconds: 365 * 24 * 60 * 60
+          }
+        }
+      },
+    ]
+  },
 
   build: {
     extend(config, ctx) {}

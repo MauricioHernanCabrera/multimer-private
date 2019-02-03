@@ -156,6 +156,7 @@ export default {
 
 .multimer-item .time-actions > button {
   margin-right: 4px;
+  z-index: 10;
 }
 
 </style>

@@ -1,4 +1,4 @@
-const showNotification = async (title) => {
+const showNotification = async ({ title, vibrate, tag }) => {
   try {
     const registration = await navigator.serviceWorker.getRegistration()
     if (!registration) return
@@ -6,6 +6,8 @@ const showNotification = async (title) => {
 
     registration.showNotification('Listo el timer!', {
       body: `${title}: !Terminada¡`,
+      vibrate,
+      tag
     })
   } catch (e) {}
 }

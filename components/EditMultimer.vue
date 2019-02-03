@@ -26,7 +26,7 @@
               :theme="theme"
               :init="0"
               :finish="23"
-              title="Hora(s)"
+              title="Hour(s)"
               v-model="hours">
             </select-time>
 
@@ -35,7 +35,7 @@
               :theme="theme"
               :init="0"
               :finish="59"
-              title="Minuto(s)"
+              title="Minute(s)"
               v-model="minutes">
             </select-time>
 
@@ -44,7 +44,7 @@
               :theme="theme"
               :init="0"
               :finish="59"
-              title="Segundo(s)"
+              title="Second(s)"
               v-model="seconds">
             </select-time>
           </input-time>

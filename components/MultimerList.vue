@@ -40,8 +40,12 @@ export default {
         this.columns = 1
       } else if (innerWidth <= 768) {
         this.columns = 2
-      } else {
+      } else if (innerWidth <= 960) {
         this.columns = 3
+      } else if (innerWidth <= 1264) {
+        this.columns = 4
+      } else if (innerWidth <= 1904) {
+        this.columns = 5
       }
     }
   }

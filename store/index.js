@@ -193,8 +193,11 @@ export const actions = {
     if (finishedTheTimer(newTimer.time)) {
       sayMessage(newTimer.title)
       enableNotifications()
-      showNotification(newTimer.title)
-      vibrate(PATTERN_VIBRATE_FINISH_TIMER)
+      showNotification({
+        title: newTimer.title,
+        tag: newTimer.id,
+        vibrate: PATTERN_VIBRATE_FINISH_TIMER
+      })
 
       commit('addHistory', {
         id: Date.now() - newTimer.id,

@@ -9,7 +9,7 @@
     <grid-item area="header" key="header" class="header">
       <Menu
         withArrowBack
-        title="Historial de multimer"
+        title="Multimer history"
         @clickArrowBack="$store.commit('setPage', 'multimer')"
         @clickTitle="$store.commit('setPage', 'multimer')"
       />

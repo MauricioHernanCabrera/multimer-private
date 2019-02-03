@@ -83,7 +83,7 @@ export default {
 }
 
 .pages {
-  margin-bottom: 50px;
+  /* margin-bottom: 50px; */
 }
 
 .floating-bar-container {

@@ -14,8 +14,9 @@
           backgroundColor="licorice-2"
           @click="$emit('clickHistory')"
         >
-          <icon style="margin-right: 2px;">history</icon>
-          Historical
+          <icon>history</icon>
+          <span>Historical</span>
+
         </btn>
       </a>
       <!-- <nav class="navigation">
@@ -94,6 +95,19 @@ export default {
   align-items: center;
   margin: 0 5px 0 0;
   cursor: pointer;
+}
+
+.history > button > i {
+  margin-right: 4px;
+}
+
+@media (max-width: 350px) {
+  .history > button > i {
+    margin-right: 0;
+  }
+  .history > button > span {
+    display: none;
+  }
 }
 
 /* .menu .navigation {
