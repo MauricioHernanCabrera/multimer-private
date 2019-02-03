@@ -77,7 +77,6 @@ export const mutations = {
   },
 
   removeTimer(state, timerId) {
-    console.log('Entro')
     const indexTimer = findById(state.timers, timerId)
     state.timers.splice(indexTimer, 1)
   },

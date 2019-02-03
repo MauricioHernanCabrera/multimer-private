@@ -5,7 +5,7 @@
     :gap="10"
   >
     <slot>
-      Aun no se cargaron temporizadores
+      There are no loaded timers
     </slot>
   </grid>
 </template>

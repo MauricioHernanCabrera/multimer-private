@@ -90,7 +90,9 @@ export default {
     percentageOfTime,
 
     editTimer (timer) {
-      this.$store.commit('updateEditTimer', JSON.parse(JSON.stringify(timer)))
+      const timerToUpdate = JSON.parse(JSON.stringify(timer))
+      timerToUpdate.time = Object.assign({}, timerToUpdate.defaultTime)
+      this.$store.commit('updateEditTimer', timerToUpdate)
       this.$store.commit('setPage', 'edit-multimer')
     }
   },

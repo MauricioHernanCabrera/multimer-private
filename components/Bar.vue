@@ -23,9 +23,9 @@ export default {
 
 .bar {
   position: absolute;
-  height: 16px;
   width: 100%;
-  bottom: -4px;
+  height: 30px;
+  bottom: -6px;
   left: 0;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -36,9 +36,9 @@ export default {
 .bar .progress {
   position: absolute;
   width: 10px;
-  height: 16px;
   left: 0;
-  bottom: -4px;
+  height: 30px;
+  bottom: -6px;
   transition: 1s;
 }
 

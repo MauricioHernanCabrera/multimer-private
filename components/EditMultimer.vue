@@ -10,7 +10,7 @@
       <grid-item area="header" key="header" class="header">
         <Menu
           withArrowBack
-          title="Nuevo multimer"
+          title="Edit multimer"
           @clickArrowBack="$store.commit('setPage', 'multimer')"
           @clickTitle="$store.commit('setPage', 'multimer')"
         />
@@ -58,21 +58,22 @@
       <floating-bar justifyContentFlexEnd backgroundColor="cloud-1" borderColor="cloud-2">
         <container class="floating-bar-container" :paddingY="false">
           <btn
-            borderColor="raspberry-3"
-            backgroundColor="raspberry-2"
+            borderColor="cloud-1"
+            backgroundColor="cloud-1"
             class="btn-reset"
+            color="licorice-3"
             type="reset"
           >
-            REINICIAR
+            RESET
           </btn>
           <btn
-            borderColor="kiwi-3"
-            backgroundColor="kiwi-2"
+            borderColor="licorice-3"
+            backgroundColor="licorice-2"
             class="btn-add"
             type="submit"
             :disabled="!isValid()"
           >
-            AGREGAR
+            UPDATE
           </btn>
         </container>
       </floating-bar>
@@ -248,7 +249,7 @@ export default {
 
 .floating-bar-container {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   background: var(--color-cloud-1);
   border-top: 2px solid var(--color-cloud-2);
   padding-top: 10px;

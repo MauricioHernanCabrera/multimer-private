@@ -1,6 +1,6 @@
 <template>
   <div class="time">
-    <p class="title">Tiempo</p>
+    <p class="title">Time</p>
     <grid
       :columns="columns"
       :rows="1"

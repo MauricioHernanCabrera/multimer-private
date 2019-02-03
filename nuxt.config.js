@@ -1,4 +1,26 @@
+const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
+  router: {
+    base: '/'
+  }
+} : {}
+
+const baseUrl = process.env.DEPLOY_ENV === 'GH_PAGES' ?
+  'https://mauriciohernancabrera.com/multimer' : 'http://localhost:3000'
+
+const page = {
+  title: 'Multimer',
+  description: 'por ahora no la tengo',
+  safe: {
+    img: `${baseUrl}/safe_img.png`,
+    alt: 'Logo de multimer'
+  },
+  favicon: `${baseUrl}/multimer.ico`,
+  creator: '@hernanmc06'
+}
+
 module.exports = {
+  ...routerBase,
+
   mode: 'universal',
 
   head: {
@@ -6,11 +28,29 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1, user-scalable=no' },
-      { hid: 'description', name: 'description', content: 'Web App para medir el tiempo.' }
+      { hid: 'description', name: 'description', content: `${page.description}` },
+
+      { name: 'twitter:card', content: 'summary' },
+      { name: 'twitter:title', content: `${page.title}` },
+      { name: 'twitter:creator:752703023583899649', content: `${page.creator}` },
+      { name: 'twitter:description', content: `${page.description}` },
+      { name: 'twitter:image', content: `${page.safe.img}` },
+      { name: 'twitter:image:alt', content: `${page.safe.alt}` },
+
+      { property: 'og:type', content: 'website' },
+      { property: 'og:title', content: `${page.title}` },
+      { property: 'og:url', content: `${baseUrl}` },
+      { property: 'og:image', content: `${page.safe.img}` },
+      { property: 'og:site_name', content: `${page.title}` },
+      { property: 'og:description', content: `${page.description}` },
     ],
+
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', async: true, href: 'https://www.googletagmanager.com/gtag/js?id=UA-121697227-1' },
+      { rel: 'icon', type: 'image/x-icon', href: `${page.favicon}` },
+    ],
+
+    script: [
+      { async: true, href: 'https://www.googletagmanager.com/gtag/js?id=UA-121697227-1' },
     ]
   },
 
