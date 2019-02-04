@@ -53,7 +53,17 @@ module.exports = {
 
     script: [
       { async: true, href: 'https://www.googletagmanager.com/gtag/js?id=UA-121697227-1' },
-    ]
+      { async: true, src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js' },
+      {
+        hid: 'adsense',
+        innerHTML: `
+            (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-3934550073327550",
+              enable_page_level_ads: true
+            });
+          `
+      },
+    ],
   },
 
   loading: { color: '#fff' },
