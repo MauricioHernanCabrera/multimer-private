@@ -1,5 +1,6 @@
 import {
   findById,
+  findIndexById,
   finishedTheTimer,
 } from '~/helpers/time'
 import {
@@ -78,7 +79,7 @@ export const mutations = {
   },
 
   removeTimer(state, timerId) {
-    const indexTimer = findById(state.timers, timerId)
+    const indexTimer = findIndexById(state.timers, timerId)
     state.timers.splice(indexTimer, 1)
   },
 
