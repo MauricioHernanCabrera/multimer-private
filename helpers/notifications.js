@@ -4,10 +4,12 @@ const showNotification = async ({ title, vibrate, tag }) => {
     if (!registration) return
     // if (!registration) return alert('No hay un Service Worker :(')
 
-    registration.showNotification('Listo el timer!', {
-      body: `${title}: !Terminada¡`,
+    registration.showNotification('Timer finished!', {
+      body: `${title}`,
+      tag,
+      silent: false,
+      renotify: true,
       vibrate,
-      tag
     })
   } catch (e) {}
 }

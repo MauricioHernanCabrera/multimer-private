@@ -50,7 +50,6 @@ export default {
 .floating-bar {
   position: fixed;
   display: flex;
-  width: 100%;
 }
 
 .floating-bar--top {

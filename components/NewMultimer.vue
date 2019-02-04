@@ -55,7 +55,7 @@
 
       </grid-item>
 
-      <floating-bar justifyContentFlexEnd backgroundColor="cloud-1" borderColor="cloud-2">
+      <floating-bar class="floating-bar" justifyContentFlexEnd backgroundColor="cloud-1" borderColor="cloud-2">
         <container class="floating-bar-container" :paddingY="false">
           <btn
             borderColor="cloud-1"
@@ -249,6 +249,10 @@ export default {
   top: 0;
   z-index: 150;
   background: var(--color-cloud-1);
+}
+
+.floating-bar {
+  width: 100%;
 }
 
 .floating-bar-container {

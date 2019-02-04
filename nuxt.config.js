@@ -23,6 +23,24 @@ const page = {
   version: '1.0.0',
 }
 
+const schemaWebApplication = {
+  "@context": "http://schema.org",
+  "@type": "WebApplication",
+  "name": `${page.title}`,
+  "url": `${baseUrl}`,
+  "description": `${page.description}`,
+  "applicationCategory": `${page.category}`,
+  "applicationSubCategory": `${page.subcategory}`,
+  "genre": `${page.genre}`,
+  "about": {
+    "@type": "Thing",
+    "description": "timer, multiple timer"
+  },
+  "browserRequirements": `${page.browserRequirements}`,
+  "softwareVersion": `${page.version}`,
+  "operatingSystem": "All"
+}
+
 module.exports = {
   ...routerBase,
 
@@ -57,33 +75,13 @@ module.exports = {
     ],
 
     script: [
-      { async: true, href: 'https://www.googletagmanager.com/gtag/js?id=UA-121697227-1' },
+      { async: true, src: 'https://www.googletagmanager.com/gtag/js?id=UA-121697227-1' },
       { async: true, src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js' },
       {
         hid: 'adsense',
         innerHTML: `(adsbygoogle = window.adsbygoogle || []).push({ google_ad_client: 'ca-pub-3934550073327550', enable_page_level_ads: true });`
       },
-      {
-        type: 'application/ld+json',
-        innerHTML: `
-          {
-            "@context": "http://schema.org",
-            "@type": "WebApplication",
-            "name": "${page.title}",
-            "url": "${baseUrl}",
-            "description": "${page.description}",
-            "applicationCategory": "${page.category}",
-            "applicationSubCategory": "${page.subcategory}",
-            "genre": "${page.genre}",
-            "about": {
-              "@type": "Thing",
-              "description": "timer, multiple timer"
-            },
-            "browserRequirements": "${page.browserRequirements}",
-            "softwareVersion": "${page.version}",
-            "operatingSystem": "All"
-          }`
-        },
+      { type: 'application/ld+json', innerHTML: JSON.stringify(schemaWebApplication) },
     ],
     __dangerouslyDisableSanitizers: ['script'],
   },
@@ -113,8 +111,8 @@ module.exports = {
     'name': 'Multimer',
     'short_name': 'Multimer',
     'lang': 'en_US',
-    'start_url': '/',
-    'scope': '/',
+    'start_url': '/multimer/',
+    'scope': '/multimer/',
     'display': 'standalone',
     'background_color': '#ffffff',
     'theme_color': '#DDDDDD',
@@ -140,6 +138,6 @@ module.exports = {
   },
 
   build: {
-    extend(config, ctx) {}
+    extend (config, ctx) {}
   }
 }

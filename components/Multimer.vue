@@ -19,22 +19,20 @@
     </grid-item>
 
     <floating-bar>
-      <container class="floating-bar-container" :paddingX="false" :paddingY="false">
-        <div class="container-btn">
-          <btn
-            borderColor="licorice-3"
-            backgroundColor="licorice-2"
-            icon
-            large
-            @click="$store.commit('setPage', 'new-multimer')"
-          >
-            <icon>add</icon>
-          </btn>
-        </div>
-        <!-- <div class="ads">
-          Anuncio
-        </div> -->
-      </container>
+      <div class="container-btn">
+        <btn
+          borderColor="licorice-3"
+          backgroundColor="licorice-2"
+          icon
+          large
+          @click="$store.commit('setPage', 'new-multimer')"
+        >
+          <icon>add</icon>
+        </btn>
+      </div>
+      <!-- <div class="ads">
+        Anuncio
+      </div> -->
     </floating-bar>
   </grid>
 </template>
@@ -86,15 +84,15 @@ export default {
   /* margin-bottom: 50px; */
 }
 
-.floating-bar-container {
+/* .floating-bar-container {
   display: flex;
   align-items: flex-end;
   flex-direction: column;
-}
-.floating-bar-container .container-btn {
+} */
+.container-btn {
   padding: 20px;
 }
-.floating-bar-container .ads {
+.ads {
   background: var(--color-cloud-1);
   height: 100%;
   width: 100%;
