@@ -9,13 +9,18 @@ const baseUrl = process.env.DEPLOY_ENV === 'GH_PAGES' ?
 
 const page = {
   title: 'Multimer',
-  description: 'por ahora no la tengo',
+  description: 'Web application of multiple free online countdown interval timers. This relog timer with sound and alarm is perfect for cooking, training, doing gymnastics, running, studying, among other things. Available for Windows, Mac, Android, iPad, iPhone and many more devices. Try it is fun!',
   safe: {
     img: `${baseUrl}/safe_img.png`,
     alt: 'Logo de multimer'
   },
   favicon: `${baseUrl}/logo-2.ico`,
-  creator: '@hernanmc06'
+  creator: '@hernanmc06',
+  category: 'Utility, Tool, Timer',
+  subcategory: 'Alarms & Clocks',
+  genre: 'Timer',
+  browserRequirements: 'Requires JavaScript. Requires HTML5.',
+  version: '1.0.0',
 }
 
 module.exports = {
@@ -56,14 +61,31 @@ module.exports = {
       { async: true, src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js' },
       {
         hid: 'adsense',
-        innerHTML: `
-            (adsbygoogle = window.adsbygoogle || []).push({
-              google_ad_client: "ca-pub-3934550073327550",
-              enable_page_level_ads: true
-            });
-          `
+        innerHTML: `(adsbygoogle = window.adsbygoogle || []).push({ google_ad_client: 'ca-pub-3934550073327550', enable_page_level_ads: true });`
       },
+      {
+        type: 'application/ld+json',
+        innerHTML: `
+          {
+            "@context": "http://schema.org",
+            "@type": "WebApplication",
+            "name": "${page.title}",
+            "url": "${baseUrl}",
+            "description": "${page.description}",
+            "applicationCategory": "${page.category}",
+            "applicationSubCategory": "${page.subcategory}",
+            "genre": "${page.genre}",
+            "about": {
+              "@type": "Thing",
+              "description": "timer, multiple timer"
+            },
+            "browserRequirements": "${page.browserRequirements}",
+            "softwareVersion": "${page.version}",
+            "operatingSystem": "All"
+          }`
+        },
     ],
+    __dangerouslyDisableSanitizers: ['script'],
   },
 
   loading: { color: '#fff' },
