@@ -95,13 +95,9 @@ import InputColor from '~/components/InputColor'
 import InputTitle from '~/components/InputTitle'
 import Container from '~/components/Container'
 
-import {
-  isRequired
-} from '~/helpers/valid'
-
-import {
-  timeToSeconds
-} from '~/helpers/time'
+import { isRequired } from '~/helpers/valid'
+import { timeToSeconds } from '~/helpers/time'
+import { timerMoreSelected, actionOfTimer } from '~/helpers/ga'
 
 export default {
   components: {
@@ -208,56 +204,8 @@ export default {
           interval: null,
         }
 
-        const {
-          hours,
-          minutes,
-          seconds
-        } = newTimer.time
-
-        ga('send', 'event', {
-          eventCategory: 'Tiempo más elegido - Completo',
-          eventAction: 'click',
-          eventLabel: `${hours}:${minutes}:${seconds}`
-        })
-
-        ga('send', 'event', {
-          eventCategory: 'Tiempo más elegido - Hora',
-          eventAction: 'click',
-          eventLabel: `${hours}`
-        })
-
-        ga('send', 'event', {
-          eventCategory: 'Tiempo más elegido - Minutos',
-          eventAction: 'click',
-          eventLabel: `${minutes}`
-        })
-
-        ga('send', 'event', {
-          eventCategory: 'Tiempo más elegido - Segundos',
-          eventAction: 'click',
-          eventLabel: `${seconds}`
-        })
-
-        ga('send', 'event', {
-          eventCategory: 'Tiempo más elegido - Segundos',
-          eventAction: 'click',
-          eventLabel: `${seconds}`
-        })
-
-
-        const { title, theme } = newTimer
-
-        ga('send', 'event', {
-          eventCategory: 'Titulo más elegido',
-          eventAction: 'click',
-          eventLabel: `${title}`
-        })
-
-        ga('send', 'event', {
-          eventCategory: 'Color más elegido',
-          eventAction: 'click',
-          eventLabel: `${theme}`
-        })
+        timerMoreSelected(newTimer)
+        actionOfTimer('Add')
 
         this.$store.commit('addTimer', payload)
         this.$store.commit('setPage', 'multimer')
@@ -280,6 +228,7 @@ export default {
         theme: 'kiwi',
         title: ''
       }
+      actionOfTimer('Reset')
       this.$store.commit('updateNewTimer', payload)
     },
   }

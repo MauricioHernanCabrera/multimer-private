@@ -5,7 +5,7 @@ const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
 } : {}
 
 const baseUrl = process.env.DEPLOY_ENV === 'GH_PAGES' ?
-  'https://mauriciohernancabrera.com/multimer' : 'http://localhost:3000'
+  'https://mauriciohernancabrera.github.io/multimer' : 'http://localhost:3000'
 
 const page = {
   title: 'Multimer',
@@ -14,7 +14,7 @@ const page = {
     img: `${baseUrl}/safe_img.png`,
     alt: 'Logo de multimer'
   },
-  favicon: `${baseUrl}/multimer.ico`,
+  favicon: `${baseUrl}/logo-2.ico`,
   creator: '@hernanmc06'
 }
 

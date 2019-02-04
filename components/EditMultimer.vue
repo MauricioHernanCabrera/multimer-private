@@ -95,13 +95,9 @@ import InputColor from '~/components/InputColor'
 import InputTitle from '~/components/InputTitle'
 import Container from '~/components/Container'
 
-import {
-  isRequired
-} from '~/helpers/valid'
-
-import {
-  timeToSeconds
-} from '~/helpers/time'
+import { isRequired } from '~/helpers/valid'
+import { timeToSeconds } from '~/helpers/time'
+import { timerMoreSelected, actionOfTimer } from '~/helpers/ga'
 
 export default {
   components: {
@@ -198,14 +194,32 @@ export default {
     submitTimer () {
       if (this.isValid()) {
         const { editTimer } = this.$store.state
-        this.$store.commit('updateTimer', {
-          timerId: editTimer.id,
-          data: {
-            ...editTimer,
+
+        const existTimer = this.$store.state.timers.some((timer) => timer.id === editTimer.id)
+        if (existTimer) {
+          this.$store.commit('updateTimer', {
+            timerId: editTimer.id,
+            data: {
+              ...editTimer,
+              defaultTime: Object.assign({}, editTimer.time),
+              interval: null,
+            }
+          })
+        } else {
+          const payload = {
+            time: Object.assign({}, editTimer.time),
+            theme: editTimer.theme,
+            title: editTimer.title,
+            id: Date.now(),
             defaultTime: Object.assign({}, editTimer.time),
+            active: false,
             interval: null,
           }
-        })
+          this.$store.commit('addTimer', payload)
+        }
+
+        timerMoreSelected(editTimer)
+        actionOfTimer('Update')
         this.$store.commit('setPage', 'multimer')
       }
     },
@@ -225,6 +239,8 @@ export default {
         theme: 'kiwi',
         title: ''
       }
+
+      actionOfTimer('Reset')
       this.$store.commit('updateEditTimer', payload)
     },
   }

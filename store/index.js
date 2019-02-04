@@ -13,6 +13,7 @@ import {
 } from '~/helpers/notifications'
 import { vibrate } from '~/helpers/vibrate'
 import { sayMessage } from '~/helpers/voice'
+import { actionOfTimer } from '~/helpers/ga'
 
 export const state = () => ({
   editTimer: {},
@@ -103,7 +104,7 @@ export const actions = {
   ////////////////////////////////////// TIMER
 
   removeTimer ({ dispatch }, timerId) {
-    dispatch('stopTimer', timerId)
+    dispatch('pauseTimer', timerId)
     commit('removeTimer', timerId)
   },
 
@@ -124,7 +125,7 @@ export const actions = {
     commit('updateTimer', payload)
   },
 
-  stopTimer ({ getters, commit }, timerId) {
+  pauseTimer ({ getters, commit }, timerId) {
     const timer = getters.timer(timerId)
 
     clearInterval(timer.interval)
@@ -191,6 +192,7 @@ export const actions = {
     const newTimer = getters.timer(timerId)
 
     if (finishedTheTimer(newTimer.time)) {
+      actionOfTimer('Finish')
       sayMessage(newTimer.title)
       enableNotifications()
       showNotification({

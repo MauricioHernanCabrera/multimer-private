@@ -11,7 +11,7 @@
 
       <div class="actions">
 
-        <icon @click="$store.commit('removeTimer', timer.id)" :disabled="timer.active">
+        <icon @click="deleteTimer(timer.id)" :disabled="timer.active">
           delete
         </icon>
 
@@ -32,7 +32,7 @@
       <btn
         :backgroundColor="`${timer.theme}-2`"
         :borderColor="`${timer.theme}-3`"
-        @click="$store.dispatch('restartTimer', timer.id)">
+        @click="restartTimer(timer.id)">
         <icon>
           stop
         </icon>
@@ -42,7 +42,7 @@
         v-if="timer.active"
         :backgroundColor="`${timer.theme}-2`"
         :borderColor="`${timer.theme}-3`"
-        @click="$store.dispatch('stopTimer', timer.id)">
+        @click="pauseTimer(timer.id)">
         <icon>
           pause
         </icon>
@@ -52,7 +52,7 @@
         v-else
         :backgroundColor="`${timer.theme}-2`"
         :borderColor="`${timer.theme}-3`"
-        @click="$store.dispatch('startTimer', timer.id)">
+        @click="startTimer(timer.id)">
         <icon>
           play_arrow
         </icon>
@@ -71,6 +71,7 @@ import {
   percentageOfTime,
   leftPad,
 } from '~/helpers/time'
+import { actionOfTimer } from '~/helpers/ga'
 
 export default {
   props: {
@@ -90,11 +91,33 @@ export default {
     percentageOfTime,
 
     editTimer (timer) {
+      actionOfTimer('Edit')
       const timerToUpdate = JSON.parse(JSON.stringify(timer))
       timerToUpdate.time = Object.assign({}, timerToUpdate.defaultTime)
       this.$store.commit('updateEditTimer', timerToUpdate)
       this.$store.commit('setPage', 'edit-multimer')
-    }
+    },
+
+    deleteTimer (id) {
+      actionOfTimer('Delete')
+      this.$store.commit('removeTimer', id)
+    },
+
+    restartTimer (id) {
+      actionOfTimer('Restart')
+      this.$store.dispatch('restartTimer', id)
+    },
+
+    pauseTimer (id) {
+      actionOfTimer('Pause')
+      this.$store.dispatch('pauseTimer', id)
+    },
+
+    startTimer (id) {
+      actionOfTimer('Start')
+      this.$store.dispatch('startTimer', id)
+    },
+
   },
 
   filters: {
