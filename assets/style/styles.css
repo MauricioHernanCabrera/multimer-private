@@ -68,7 +68,9 @@ body {
   background: var(--color-cloud-1);
   color: var(--color-licorice-3);
   overflow-x: hidden;
+  user-select: none;
 }
+
 .bg-transparent {
   background-color: transparent;
 }
@@ -332,6 +334,50 @@ body {
 }
 
 
+.theme {
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.theme-kiwi {
+  background-color: var(--color-kiwi-3);
+  color: var(--color-creme);
+}
+.theme-blueberry {
+  background-color: var(--color-blueberry-3);
+  color: var(--color-creme);
+}
+.theme-raspberry {
+  background-color: var(--color-raspberry-3);
+  color: var(--color-creme);
+}
+.theme-banana {
+  background-color: var(--color-banana-3);
+  color: var(--color-creme);
+}
+.theme-pumpkin {
+  background-color: var(--color-pumpkin-3);
+  color: var(--color-creme);
+}
+.theme-jelly {
+  background-color: var(--color-jelly-3);
+  color: var(--color-creme);
+}
+.theme-cocoa {
+  background-color: var(--color-cocoa-3);
+  color: var(--color-creme);
+}
+.theme-licorice {
+  background-color: var(--color-licorice-3);
+  color: var(--color-creme);
+}
+.theme-cloud {
+  background-color: var(--color-cloud-3);
+  color: var(--color-creme);
+}
+.theme-creme {
+  background-color: var(--color-creme);
+  color: var(--color-licorice);
+}
 
 .justify-content-flex-start {
   justify-content: flex-start;

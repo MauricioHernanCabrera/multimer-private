@@ -1,7 +1,7 @@
 <template>
   <div
     class="history-item"
-    :class="[`bg-${history.theme}-2`]"
+    :class="[`theme theme-${history.theme}`]"
   >
     <span class="message">{{ history.message }}</span>
     <span class="created">{{ history.created | timeFormat }}</span>

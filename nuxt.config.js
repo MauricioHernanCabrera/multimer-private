@@ -90,12 +90,10 @@ module.exports = {
 
   css: [
     'animate.css',
-    'epic-spinners/dist/lib/epic-spinners.min.css',
     '~/assets/style/styles.css',
   ],
 
   plugins: [
-    '~/plugins/epic-spinners',
     { src: '~/plugins/entry', ssr: false },
     { src: '~/plugins/cookie', ssr: false },
     { src: '~/plugins/webfontloader', ssr: false },

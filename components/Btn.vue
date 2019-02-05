@@ -4,7 +4,7 @@
     :class="[
       size,
       border,
-      theme,
+      defineTheme,
       `${disabled? 'btn--disabled' : ''}`,
       `${icon? 'btn--icon' : ''}`
     ]"
@@ -20,7 +20,8 @@
 
 import {
   COLORS_ARRAY,
-  TYPES_OF_BUTTONS
+  TYPES_OF_BUTTONS,
+  THEME
 } from '~/helpers/const'
 
 export default {
@@ -69,6 +70,12 @@ export default {
       validator: (value) => TYPES_OF_BUTTONS.indexOf(value) !== -1
     },
 
+    theme: {
+      type: String,
+      default: '',
+      // validator: (value) => THEME.indexOf(value) !== -1
+    },
+
     disabled: {
       type: Boolean,
       default: false,
@@ -93,8 +100,8 @@ export default {
       return this.onlyBorderBottom? 'btn--only-border-bottom' : ''
     },
 
-    theme () {
-      return `color-${this.color} bg-${this.backgroundColor} bc-${this.borderColor}`
+    defineTheme () {
+      return this.theme? `theme theme-${this.theme}` : `color-${this.color} bg-${this.backgroundColor} bc-${this.borderColor}`
     }
   },
 }

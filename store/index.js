@@ -2,6 +2,7 @@ import {
   findById,
   findIndexById,
   finishedTheTimer,
+  leftPad,
 } from '~/helpers/time'
 import {
   newTimer,
@@ -25,7 +26,127 @@ export const state = () => ({
 
   page: 'multimer',
 
-  timers: [],
+  timers: [
+    // {
+    //   id: 1,
+    //   title: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+    //   time: {
+    //     hours: 0,
+    //     minutes: 0,
+    //     seconds: 10,
+    //   },
+    //   defaultTime: {
+    //     hours: 0,
+    //     minutes: 0,
+    //     seconds: 10,
+    //   },
+    //   active: false,
+    //   interval: null,
+    //   theme: 'kiwi'
+    // },
+    // {
+    //   id: 2,
+    //   title: 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+    //   time: {
+    //     hours: 0,
+    //     minutes: 0,
+    //     seconds: 10,
+    //   },
+    //   defaultTime: {
+    //     hours: 0,
+    //     minutes: 0,
+    //     seconds: 10,
+    //   },
+    //   active: false,
+    //   interval: null,
+    //   theme: 'blueberry'
+    // },
+    // {
+    //   id: 3,
+    //   title: 'cccccccccccccccccccccccccccccccccccccccccccccccccc',
+    //   time: {
+    //     hours: 0,
+    //     minutes: 0,
+    //     seconds: 10,
+    //   },
+    //   defaultTime: {
+    //     hours: 0,
+    //     minutes: 0,
+    //     seconds: 10,
+    //   },
+    //   active: false,
+    //   interval: null,
+    //   theme: 'banana'
+    // },
+    // {
+    //   id: 4,
+    //   title: 'dddddddddddddddddddddddddddddddddddddddddddddddddd',
+    //   time: {
+    //     hours: 0,
+    //     minutes: 0,
+    //     seconds: 10,
+    //   },
+    //   defaultTime: {
+    //     hours: 0,
+    //     minutes: 0,
+    //     seconds: 10,
+    //   },
+    //   active: false,
+    //   interval: null,
+    //   theme: 'pumpkin'
+    // },
+    // {
+    //   id: 5,
+    //   title: 'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+    //   time: {
+    //     hours: 0,
+    //     minutes: 0,
+    //     seconds: 10,
+    //   },
+    //   defaultTime: {
+    //     hours: 0,
+    //     minutes: 0,
+    //     seconds: 10,
+    //   },
+    //   active: false,
+    //   interval: null,
+    //   theme: 'raspberry'
+    // },
+    // {
+    //   id: 6,
+    //   title: 'ffffffffffffffffffffffffffffffffffffffffffffffffff',
+    //   time: {
+    //     hours: 0,
+    //     minutes: 0,
+    //     seconds: 10,
+    //   },
+    //   defaultTime: {
+    //     hours: 0,
+    //     minutes: 0,
+    //     seconds: 10,
+    //   },
+    //   active: false,
+    //   interval: null,
+    //   theme: 'jelly'
+    // },
+    // {
+    //   id: 7,
+    //   title: 'gggggggggggggggggggggggggggggggggggggggggggggggggg',
+    //   time: {
+    //     hours: 0,
+    //     minutes: 0,
+    //     seconds: 10,
+    //   },
+    //   defaultTime: {
+    //     hours: 0,
+    //     minutes: 0,
+    //     seconds: 10,
+    //   },
+    //   active: false,
+    //   interval: null,
+    //   theme: 'cocoa'
+    // },
+  ],
 })
 
 export const getters = {
@@ -192,13 +313,22 @@ export const actions = {
 
     const newTimer = getters.timer(timerId)
 
+    showNotification(newTimer.title, {
+      body: `${newTimer.hours > 0? leftPad(newTimer.hours) + ':' : '' }${leftPad(newTimer.minutes)}:${leftPad(newTimer.seconds)}`,
+      tag: newTimer.id,
+      silent: true,
+      renotify: true,
+    })
+
     if (finishedTheTimer(newTimer.time)) {
       actionOfTimer('Finish')
       sayMessage(newTimer.title)
       enableNotifications()
-      showNotification({
-        title: newTimer.title,
+      showNotification(newTimer.title, {
+        body: 'Timer finished!',
         tag: newTimer.id,
+        silent: false,
+        renotify: true,
         vibrate: PATTERN_VIBRATE_FINISH_TIMER
       })
 

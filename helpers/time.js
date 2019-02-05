@@ -2,7 +2,7 @@ const findIndexById = (timers, id) => timers.findIndex(timer => timer.id === id)
 
 const findById = (timers, id) => JSON.parse(JSON.stringify(timers.find(timer => timer.id === id)))
 
-const finishedTheTimer = ({ hours, minutes, seconds }) => hours === 0 && minutes === 0 && seconds === 0
+const finishedTheTimer = ({ hours, minutes, seconds }) => hours <= 0 && minutes <= 0 && seconds <= 0
 
 const percentageOfTime = (time, timeDefault) => {
   const timeInSeconds = timeToSeconds(time)

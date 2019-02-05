@@ -3,7 +3,7 @@
     <ul class="list-of-time">
       <li
         class="item"
-        :class="[{ 'selected': item === value }, item === value? `bg-${theme}-2` : '']"
+        :class="[{ 'selected': item === value }, item === value? `theme theme-${theme}` : '']"
         v-for="item in listOfTime"
         :key="item"
         :Value="item"

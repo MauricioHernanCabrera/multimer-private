@@ -1,16 +1,16 @@
-const showNotification = async ({ title, vibrate, tag }) => {
+const showNotification = async (title, config) => {
   try {
     const registration = await navigator.serviceWorker.getRegistration()
     if (!registration) return
     // if (!registration) return alert('No hay un Service Worker :(')
 
-    registration.showNotification('Timer finished!', {
-      body: `${title}`,
-      tag,
-      silent: false,
-      renotify: true,
-      vibrate,
-    })
+    // body: `${title}`,
+    // tag,
+    // silent: false,
+    // renotify: true,
+    // vibrate,
+
+    registration.showNotification(title, config)
   } catch (e) {}
 }
 

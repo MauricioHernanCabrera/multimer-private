@@ -9,7 +9,6 @@
 
       <a class="history" @click="$emit('clickTitle')" v-if="withHistory">
         <btn
-          onlyBorderBottom
           borderColor="licorice-3"
           backgroundColor="licorice-2"
           @click="$emit('clickHistory')"

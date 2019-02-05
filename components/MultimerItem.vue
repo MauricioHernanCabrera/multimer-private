@@ -1,5 +1,5 @@
 <template>
-  <div class="multimer-item" :class="[`bg-${timer.theme}-2`]">
+  <div class="multimer-item" :class="[`theme-${timer.theme}`]">
     <bar
       :backgroundColor="`${timer.theme}-3`"
       :progressActive="timer.active"
@@ -7,7 +7,8 @@
     />
 
     <div class="timer-header">
-      <h2 class="title">{{ timer.title }}</h2>
+      <h2 class="title">{{ timer.title | textTruncate }}</h2>
+      <!-- <h2 class="title">{{ timer.title }}</h2> -->
 
       <div class="actions">
 
@@ -30,8 +31,7 @@
 
     <div class="time-actions">
       <btn
-        :backgroundColor="`${timer.theme}-2`"
-        :borderColor="`${timer.theme}-3`"
+        :theme="timer.theme"
         @click="restartTimer(timer.id)">
         <icon>
           stop
@@ -40,8 +40,7 @@
 
       <btn
         v-if="timer.active"
-        :backgroundColor="`${timer.theme}-2`"
-        :borderColor="`${timer.theme}-3`"
+        :theme="timer.theme"
         @click="pauseTimer(timer.id)">
         <icon>
           pause
@@ -50,8 +49,7 @@
 
       <btn
         v-else
-        :backgroundColor="`${timer.theme}-2`"
-        :borderColor="`${timer.theme}-3`"
+        :theme="timer.theme"
         @click="startTimer(timer.id)">
         <icon>
           play_arrow
@@ -122,6 +120,9 @@ export default {
 
   filters: {
     leftPad,
+    textTruncate (title) {
+      return title.length > 10? `${title.substr(0, 10)}...` : title
+    }
   }
 }
 </script>
@@ -134,6 +135,9 @@ export default {
   padding: 20px;
   border-radius: 10px;
   position: relative;
+  grid-column-end: span 1;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .multimer-item .timer-header {

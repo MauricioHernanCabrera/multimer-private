@@ -9,7 +9,7 @@
     >
       <div
         class="item"
-        :class="[`bg-${item}-2`, { 'selected': item === value }]"
+        :class="[`theme theme-${item}`, { 'selected': item === value }]"
         v-for="item in listOfColor"
         :key="item"
         @click="$emit('input', item)">
