@@ -314,7 +314,7 @@ export const actions = {
     const newTimer = getters.timer(timerId)
 
     showNotification(newTimer.title, {
-      body: `${newTimer.hours > 0? leftPad(newTimer.hours) + ':' : '' }${leftPad(newTimer.minutes)}:${leftPad(newTimer.seconds)}`,
+      body: `${newTimer.time.hours > 0? leftPad(newTimer.time.hours) + ':' : '' }${leftPad(newTimer.time.minutes)}:${leftPad(newTimer.time.seconds)}`,
       tag: newTimer.id,
       silent: true,
       renotify: true,
