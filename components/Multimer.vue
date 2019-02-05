@@ -18,7 +18,7 @@
       </container>
     </grid-item>
 
-    <floating-bar>
+    <floating-bar class="floating-bar">
       <div class="container-btn">
         <btn
           borderColor="licorice-3"
@@ -92,6 +92,12 @@ export default {
 .container-btn {
   padding: 20px;
 }
+
+.floating-bar {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .ads {
   background: var(--color-cloud-1);
   height: 100%;

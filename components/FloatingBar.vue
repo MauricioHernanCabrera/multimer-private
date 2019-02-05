@@ -65,7 +65,7 @@ export default {
   right: 0;
 }
 
-@media (max-height: 350px) {
+@media (max-height: 300px) {
   .floating-bar {
     position: relative;
   }
