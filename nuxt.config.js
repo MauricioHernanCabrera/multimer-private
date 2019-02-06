@@ -95,9 +95,10 @@ module.exports = {
 
   plugins: [
     { src: '~/plugins/entry', ssr: false },
-    { src: '~/plugins/cookie', ssr: false },
     { src: '~/plugins/webfontloader', ssr: false },
     { src: '~/plugins/ga', ssr: false },
+    { src: '~/plugins/inject-ww', ssr: false },
+    { src: '~/plugins/init-state', ssr: false },
   ],
 
   modules: [,
@@ -136,6 +137,16 @@ module.exports = {
   },
 
   build: {
-    extend (config, ctx) {}
+    extend (config, { isDev, isClient }) {
+      config.output.globalObject = "this"
+
+      if (isClient) { // web workers are only available client-side
+        config.module.rules.push({
+          test: /\.worker\.js$/, // this will pick up all .js files that ends with ".worker.js"
+          loader: 'worker-loader',
+          exclude: /(node_modules)/
+        })
+      }
+    }
   }
 }

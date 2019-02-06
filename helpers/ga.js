@@ -1,4 +1,6 @@
 const timerMoreSelected = ({ title, theme, time: { hours, minutes, seconds }}) => {
+  if (process.env.DEPLOY_ENV !== 'GH_PAGES') return
+
   const baseCategory = 'Timer more selected'
   const baseAction = 'Selection'
 
@@ -40,6 +42,8 @@ const timerMoreSelected = ({ title, theme, time: { hours, minutes, seconds }}) =
 }
 
 const actionOfTimer = (name) => {
+  if (process.env.DEPLOY_ENV !== 'GH_PAGES') return
+
   ga('send', 'event', {
     eventCategory: `Action of Timer`,
     eventAction: `Click`,

@@ -64,7 +64,7 @@ export default {
 
   computed: {
     timersForId () {
-      const timers = JSON.parse(JSON.stringify(this.$store.state.timers))
+      const timers = this.$store.state.timers.slice()
 
       return timers.sort((timerA, timerB) => timerA.id - timerB.id)
     }

@@ -90,8 +90,10 @@ export default {
 
     editTimer (timer) {
       actionOfTimer('Edit')
-      const timerToUpdate = JSON.parse(JSON.stringify(timer))
+      const timerToUpdate = Object.assign({}, timer)
+
       timerToUpdate.time = Object.assign({}, timerToUpdate.defaultTime)
+
       this.$store.commit('updateEditTimer', timerToUpdate)
       this.$store.commit('setPage', 'edit-multimer')
     },

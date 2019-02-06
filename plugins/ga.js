@@ -6,7 +6,7 @@ export default ({ app, store }) => {
     m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
   })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga')
 
-  // if (process.env.DEPLOY_ENV === 'GH_PAGES') {
+  if (process.env.DEPLOY_ENV === 'GH_PAGES') {
     ga('create', 'UA-121697227-1', 'auto')
 
     window.dataLayer = window.dataLayer || [];
@@ -24,5 +24,5 @@ export default ({ app, store }) => {
       //   ga('set', 'sendHitTask', null)
       // }
     })
-  // }
+  }
 }

@@ -26,126 +26,9 @@ export const state = () => ({
 
   page: 'multimer',
 
-  timers: [
-    // {
-    //   id: 1,
-    //   title: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-    //   time: {
-    //     hours: 0,
-    //     minutes: 0,
-    //     seconds: 10,
-    //   },
-    //   defaultTime: {
-    //     hours: 0,
-    //     minutes: 0,
-    //     seconds: 10,
-    //   },
-    //   active: false,
-    //   interval: null,
-    //   theme: 'kiwi'
-    // },
-    // {
-    //   id: 2,
-    //   title: 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
-    //   time: {
-    //     hours: 0,
-    //     minutes: 0,
-    //     seconds: 10,
-    //   },
-    //   defaultTime: {
-    //     hours: 0,
-    //     minutes: 0,
-    //     seconds: 10,
-    //   },
-    //   active: false,
-    //   interval: null,
-    //   theme: 'blueberry'
-    // },
-    // {
-    //   id: 3,
-    //   title: 'cccccccccccccccccccccccccccccccccccccccccccccccccc',
-    //   time: {
-    //     hours: 0,
-    //     minutes: 0,
-    //     seconds: 10,
-    //   },
-    //   defaultTime: {
-    //     hours: 0,
-    //     minutes: 0,
-    //     seconds: 10,
-    //   },
-    //   active: false,
-    //   interval: null,
-    //   theme: 'banana'
-    // },
-    // {
-    //   id: 4,
-    //   title: 'dddddddddddddddddddddddddddddddddddddddddddddddddd',
-    //   time: {
-    //     hours: 0,
-    //     minutes: 0,
-    //     seconds: 10,
-    //   },
-    //   defaultTime: {
-    //     hours: 0,
-    //     minutes: 0,
-    //     seconds: 10,
-    //   },
-    //   active: false,
-    //   interval: null,
-    //   theme: 'pumpkin'
-    // },
-    // {
-    //   id: 5,
-    //   title: 'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
-    //   time: {
-    //     hours: 0,
-    //     minutes: 0,
-    //     seconds: 10,
-    //   },
-    //   defaultTime: {
-    //     hours: 0,
-    //     minutes: 0,
-    //     seconds: 10,
-    //   },
-    //   active: false,
-    //   interval: null,
-    //   theme: 'raspberry'
-    // },
-    // {
-    //   id: 6,
-    //   title: 'ffffffffffffffffffffffffffffffffffffffffffffffffff',
-    //   time: {
-    //     hours: 0,
-    //     minutes: 0,
-    //     seconds: 10,
-    //   },
-    //   defaultTime: {
-    //     hours: 0,
-    //     minutes: 0,
-    //     seconds: 10,
-    //   },
-    //   active: false,
-    //   interval: null,
-    //   theme: 'jelly'
-    // },
-    // {
-    //   id: 7,
-    //   title: 'gggggggggggggggggggggggggggggggggggggggggggggggggg',
-    //   time: {
-    //     hours: 0,
-    //     minutes: 0,
-    //     seconds: 10,
-    //   },
-    //   defaultTime: {
-    //     hours: 0,
-    //     minutes: 0,
-    //     seconds: 10,
-    //   },
-    //   active: false,
-    //   interval: null,
-    //   theme: 'cocoa'
-    // },
+  timers: [],
+
+  workers: [
   ],
 })
 
@@ -153,10 +36,24 @@ export const getters = {
   ////////////////////////////////////// TIMER
   timer: ({ timers }) => (id) => {
     return findById(timers, id)
-  }
+  },
+
+  workers: ({ workers }) => (id) => {
+    return findById(workers, id)
+  },
 }
 
 export const mutations = {
+  ////////////////////////////////////// WORKER
+  addWorker (state, worker) {
+    state.workers.push(worker)
+  },
+
+  removeWorker (state, workerId) {
+    const workerIndex = findIndexById(state.workers, workerId)
+    state.workers.splice(workerIndex, 1)
+  },
+
   ////////////////////////////////////// EDIT TIMER
 
   setEditTimer(state, timer = {}) {
@@ -204,7 +101,7 @@ export const mutations = {
     state.timers.splice(indexTimer, 1)
   },
 
-  updateTimer(state, { timerId, data }) {
+  updateTimer (state, { timerId, data }) {
     const timer = findById(state.timers, timerId)
 
     state.timers = [
@@ -230,10 +127,22 @@ export const actions = {
     commit('removeTimer', timerId)
   },
 
-  restartTimer ({ getters, commit }, timerId) {
+  restartTimer ({ getters, commit, state }, timerId) {
     const timer = getters.timer(timerId)
 
-    clearInterval(timer.interval)
+    const w = getters.workers(timerId)
+
+    if (w) {
+      const w = getters.workers(timerId)
+      w.worker.postMessage({
+        type: 'clearInterval',
+        payload: {}
+      })
+      w.worker.onmessage = null
+      w.worker.terminate()
+
+      commit('removeWorker', timerId)
+    }
 
     const payload = {
       timerId: timer.id,
@@ -247,10 +156,19 @@ export const actions = {
     commit('updateTimer', payload)
   },
 
-  pauseTimer ({ getters, commit }, timerId) {
+  pauseTimer ({ getters, commit, state }, timerId) {
     const timer = getters.timer(timerId)
 
-    clearInterval(timer.interval)
+    const w = getters.workers(timerId)
+
+    w.worker.postMessage({
+      type: 'clearInterval',
+      payload: {}
+    })
+    w.worker.onmessage = null
+    w.worker.terminate()
+
+    commit('removeWorker', timerId)
 
     const payload = {
       timerId: timer.id,
@@ -263,62 +181,69 @@ export const actions = {
     commit('updateTimer', payload)
   },
 
-  startTimer ({ dispatch, commit, getters }, timerId) {
+  startTimer ({ dispatch, commit, getters, state }, timerId) {
     const timer = getters.timer(timerId)
     if (finishedTheTimer(timer.time)) {
       dispatch('restartTimer', timerId)
     } else {
       vibrate(PATTERN_VIBRATE_START_TIMER)
-      const interval = setInterval(() => dispatch('reduceTime', timerId), 1000)
-      const payload = {
-        timerId,
-        data: {
-          interval,
-          active: true
+
+      const worker = this.$worker.createWorker()
+
+      worker.onmessage = (event) => {
+        const { data: { type, payload } } = event
+
+        switch (type) {
+          case 'getInterval': {
+            const { interval } = payload
+
+            commit('updateTimer', {
+              timerId,
+              data: {
+                interval,
+                active: true
+              }
+            })
+            break
+          }
+
+          case 'newValueTimer': {
+            dispatch('reduceTime', JSON.parse(JSON.stringify(payload)))
+          }
+
+          default: {
+            break
+          }
         }
       }
-      commit('updateTimer', payload)
+
+      worker.postMessage({
+        type: 'startTimer',
+        payload: {
+          timer,
+        }
+      })
+
+      commit('addWorker', {
+        id: timer.id,
+        worker,
+      })
     }
   },
 
-  reduceTime ({ getters, commit, dispatch }, timerId) {
-    const { time } = getters.timer(timerId)
 
-    let { hours, minutes, seconds } = Object.assign(time)
 
-    if (minutes === 0 && hours > 0 && seconds === 0) {
-      hours--
-      minutes = 60
-    }
-
-    if (seconds === 0 && minutes > 0) {
-      minutes--
-      seconds = 60
-    }
-
-    seconds--
-
-    const payload = {
-      timerId,
-      data: {
-        time: {
-          hours,
-          minutes,
-          seconds
-        }
-      }
-    }
-
+  reduceTime ({ getters, commit, dispatch }, payload) {
     commit('updateTimer', payload)
 
-    const newTimer = getters.timer(timerId)
+    const newTimer = getters.timer(payload.timerId)
 
-    showNotification(newTimer.title, {
-      body: `${newTimer.time.hours > 0? leftPad(newTimer.time.hours) + ':' : '' }${leftPad(newTimer.time.minutes)}:${leftPad(newTimer.time.seconds)}`,
-      tag: newTimer.id,
-      silent: true,
-      renotify: true,
-    })
+    // showNotification(newTimer.title, {
+    //   body: `${newTimer.time.hours > 0? leftPad(newTimer.time.hours) + ':' : '' }${leftPad(newTimer.time.minutes)}:${leftPad(newTimer.time.seconds)}`,
+    //   tag: newTimer.id,
+    //   silent: true,
+    //   renotify: true,
+    // })
 
     if (finishedTheTimer(newTimer.time)) {
       actionOfTimer('Finish')
@@ -338,6 +263,7 @@ export const actions = {
         theme: newTimer.theme,
         created: new Date(),
       })
+
       dispatch('restartTimer', newTimer.id)
     }
   }
